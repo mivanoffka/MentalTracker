@@ -1,5 +1,5 @@
-import {Avatar, Button, Card, Divider, List, Slider, Typography} from "antd";
-import {useState} from "react";
+import {Avatar, Button, Card, Divider, List, Modal, Slider, Typography} from "antd";
+import React, {useState} from "react";
 
 
 function Dashboard({model}) {
@@ -16,12 +16,21 @@ function Dashboard({model}) {
 
         setData([...data, item])
     }
+    const [editorOpened, setEditorOpened] = useState(false)
+
+    function openEditor() {
+        setEditorOpened(true)
+    }
+
+    function closeEditor() {
+        setEditorOpened(false)
+    }
 
     return (
         <Card style={{width: "320px", height: "450px"}}>
             <div style={{display: "flex", justifyContent: "space-between"}}>
                 <h>{model.title}</h>
-                <Button onClick={addItem} type="primary">
+                <Button onClick={openEditor} type="primary">
                     Внести
                 </Button>
             </div>
@@ -55,6 +64,7 @@ function Dashboard({model}) {
                 open: false,
             }} range defaultValue={[model.minValue, model.maxValue]} value={sliderValue} onChange={setSliderValue}></Slider>
 
+            <Modal open={editorOpened} onCancel={closeEditor} onOk={closeEditor}></Modal>
         </Card>
     )
 }
