@@ -1,27 +1,27 @@
 class Model {
-    #title
-    #minValue
-    #maxValue
-    #labels
-    #imageSources
+    #title: string
+    #minValue: number
+    #maxValue: number
+    #labels: string[]
+    #imageSources: string[]
 
-    get title() {
+    get title(): string {
         return this.#title
     }
 
-    get minValue() {
+    get minValue() : number {
         return this.#minValue
     }
 
-    get maxValue() {
+    get maxValue() : number{
         return this.#maxValue
     }
 
-    get labels() {
+    get labels() : string[] {
         return this.#labels
     }
 
-    get imageSources() {
+    get imageSources() : string[] {
         return this.#imageSources
     }
 
@@ -29,7 +29,7 @@ class Model {
         return this.#maxValue - this.#minValue
     }
 
-    getCorrectedIndex(index, correctionRange) {
+    getCorrectedIndex(index: number, correctionRange: number): number {
         const indexCorrected = Math.floor(correctionRange * (index / (this.#maxValue - this.#minValue)))
         if (indexCorrected < 0)
             return 0
@@ -38,15 +38,15 @@ class Model {
         return indexCorrected
     }
 
-    getLabel(index) {
+    getLabel(index: number): string {
         return this.#labels[this.getCorrectedIndex(index, this.#labels.length)]
     }
 
-    getImageSource(index) {
+    getImageSource(index: number): string {
         return this.#imageSources[this.getCorrectedIndex(index, this.#imageSources.length)]
     }
 
-    constructor(title, minValue, maxValue, labels, imageSources) {
+    constructor(title: string, minValue: number, maxValue: number, labels: string[], imageSources: string[]) {
         this.#title = title
         this.#minValue = minValue
         this.#maxValue = maxValue

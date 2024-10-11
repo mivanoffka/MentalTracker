@@ -1,24 +1,24 @@
 class Record {
-    #value
-    #datetime
+    #value: number
+    #datetime: Date
 
-    get value() {
+    get value(): number {
         return this.#value
     }
 
-    set value(value) {
+    set value(value: number) {
         this.#value = value
     }
 
-    get datetime() {
+    get datetime(): Date {
         return this.#datetime
     }
 
-    set datetime(value) {
+    set datetime(value: Date) {
         this.#datetime = value
     }
 
-    constructor(value, datetime) {
+    constructor(value: number, datetime: Date) {
         this.#datetime = datetime
         this.#value = value
     }
