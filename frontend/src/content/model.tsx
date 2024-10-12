@@ -35,6 +35,7 @@ class Model {
             return 0
         if (indexCorrected >= correctionRange)
             return correctionRange - 1
+
         return indexCorrected
     }
 
