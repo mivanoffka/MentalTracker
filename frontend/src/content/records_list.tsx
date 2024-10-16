@@ -90,13 +90,17 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     return (
         <>
             <Card style={fullFillStyle}>
-                <Flex vertical gap="middle" align="stretch" justify="stretch" style={fullWidthStyle}>
-                    <List
-                        dataSource={records}
-                        renderItem={(record, index) => RecordsListItem({record, model})}>
-                    </List>
-                    <Button onClick={openEditor} type="primary" style={fullWidthStyle}>Внести</Button>
-                    <Button onClick={truncate} style={fullWidthStyle}>Очистить</Button>
+                <Flex vertical gap="middle" align="center" justify="center" style={fullWidthStyle}>
+                        <List
+                            style={{width: '100%', height: "500px", overflow: "auto"}}
+                            bordered
+                            dataSource={records.slice().reverse()}
+                            renderItem={(record) => RecordsListItem({record, model})}>
+                        </List>
+                    <Flex gap="middle" style={fullWidthStyle}>
+                        <Button style={{width: '70%'}} onClick={openEditor} type="primary">Внести</Button>
+                        <Button style={{width: '30%'}} onClick={truncate}>Очистить</Button>
+                    </Flex>
                 </Flex>
             </Card>
 

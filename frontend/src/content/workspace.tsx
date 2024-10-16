@@ -29,7 +29,7 @@ const Workspace: React.FC = ()=> {
     );
 
     return (
-        <Flex style={fullFillStyle}>
+        <Flex style={fullFillStyle} gap="middle">
             <div style={{width: "30%"}}>
                 <RecordsList records={records} setRecords={setRecords} model={model}/>
             </div>
