@@ -1,3 +1,6 @@
+import dayjs from "dayjs"
+import Record from "./record.tsx"
+
 class Model {
     #title: string
     #minValue: number
@@ -25,8 +28,8 @@ class Model {
         return this.#imageSources
     }
 
-    get range() {
-        return this.#maxValue - this.#minValue
+    get middleValue() {
+        return Math.floor((this.#maxValue - this.#minValue) / 2)
     }
 
     getCorrectedIndex(index: number, correctionRange: number): number {
@@ -45,6 +48,10 @@ class Model {
 
     getImageSource(index: number): string {
         return this.#imageSources[this.getCorrectedIndex(index, this.#imageSources.length)]
+    }
+
+    getDefaultRecord(): Record {
+        return new Record(this.middleValue, dayjs());
     }
 
     constructor(title: string, minValue: number, maxValue: number, labels: string[], imageSources: string[]) {

@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from records import views as records_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('records/add/uid=<str:uid>&value=<str:value>&datetime=<str:datetime>', records_views.add_record),
+    path('records/fetch/uid=<str:uid>', records_views.fetch),
+    path('records/truncate/uid=<str:uid>', records_views.truncate)
+
 ]

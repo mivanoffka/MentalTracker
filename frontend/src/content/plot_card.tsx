@@ -3,17 +3,12 @@ import React from "react";
 import { fullFillStyle, fullWidthStyle } from "./styles.tsx"
 
 
-const RecordsList: React.FC = ()=> {
+const PlotCard: React.FC = ()=> {
     return (
         <Card style={fullFillStyle}>
-            <Flex vertical gap="middle" align="center" justify="center">
-                <List>
 
-                </List>
-                <Button type="primary" style={fullWidthStyle}>Внести</Button>
-            </Flex>
         </Card>
     )
 }
 
-export default RecordsList
+export default PlotCard
