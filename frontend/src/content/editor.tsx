@@ -23,6 +23,12 @@ const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord
     React.useEffect(() => {
         if (opened) {
             if (selectedRecord !== null) {
+                if (selectedRecord.id != -1) {
+                    setUseCurrentDate(false);
+                }
+                else {
+                    setUseCurrentDate(true);
+                }
                 setSelectedDate(selectedRecord.datetime)
                 setSliderValue(selectedRecord.value)
             }
@@ -34,9 +40,10 @@ const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord
     }
 
     const onOk = () => {
-        // setSelectedRecord(new Record(sliderValue, selectedDate, record.id))
-        saveRecord(new Record(sliderValue, selectedDate, -1))
-        setOpened(false)
+        if (selectedRecord !== null) {
+            saveRecord(new Record(sliderValue, selectedDate, selectedRecord.id))
+            setOpened(false)
+        }
     }
 
     function toggleUseCurrentDate() : void {
@@ -44,9 +51,7 @@ const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord
     }
 
     useEffect(() => {
-        console.log("interval set");
         const interval = setInterval(() => {
-            console.log("Dayjs updated");
             setCurrentDate(dayjs());
         }, 1000);
 
@@ -55,10 +60,11 @@ const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord
 
     useEffect(() => {
         if (useCurrentDate) {
-            console.log("selected date updated")
             setSelectedDate(currentDate)
         }
     }, [currentDate, setSelectedDate, useCurrentDate])
+
+    
 
     return (
         <Modal width="300px" open={opened} onCancel={onCancel} onOk={onOk}
@@ -90,20 +96,14 @@ const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord
                     <Flex style={{width: "100%", height: "100%"}} align="center" justify="center"
                           gap="small">
 
-                        <DatePicker style={{width: "60%", height: "100%"}} format="D MMMM YYYY"
+                        <DatePicker style={{width: "100%", height: "100%"}} format="D MMMM YYYY, HH:mm"
                                     size="small"
                                     value={selectedDate}
                                     onChange={setSelectedDate}
                                     disabled={useCurrentDate}
+                                    showTime
                                     />
-
-                        <TimePicker style={{width: "40%", height: "100%"}} format="HH:mm"
-                                    size="small"
-                                    value={selectedDate}
-                                    onChange={setSelectedDate}
-                                    disabled={useCurrentDate}
-                                    needConfirm={false}
-                        />
+                        
                     </Flex>
                 </Flex>
             </Flex>

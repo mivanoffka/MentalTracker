@@ -20,8 +20,11 @@ from records import views as records_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('records/add/uid=<str:uid>&value=<str:value>&datetime=<str:datetime>', records_views.add_record),
     path('records/fetch/uid=<str:uid>', records_views.fetch),
-    path('records/truncate/uid=<str:uid>', records_views.truncate)
+    path('records/truncate/uid=<str:uid>', records_views.truncate),
+    path('records/delete/uid=<str:uid>&id=<str:id>', records_views.delete_record),
+    path('records/update/uid=<str:uid>&id=<str:id>&value=<str:value>&datetime=<str:datetime>', records_views.update_record)
 
 ]

@@ -6,48 +6,58 @@ from typing import List
 import json
 
 def add_record(request, uid, value, datetime):
-    print(request)
-    print(value)
-    print(datetime)
-
     try:
         record = Record.objects.create(uid=uid, value=int(value), datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M"))
         record.save()
 
-        return HttpResponse(
-            json.dumps(
-                jsonify_list(
-                    _get_all_records(int(uid))
-                )
-            ), content_type="application/json"
-        )
+        return _send_records(uid)
+    except Exception as e:
+        return HttpResponse(str(e))
+    
+def delete_record(request, uid, id):
+    try:
+        record: Record = Record.objects.filter(id=id).first()
+        if record.uid != int(uid):
+            raise Exception("Attempted to delete a record that belongs to another user.")
+        record.delete()
+
+        return _send_records(uid)
+    except Exception as e:
+        return HttpResponse(str(e))
+
+def update_record(request, uid, id, value, datetime):
+    try:
+        record: Record = Record.objects.filter(id=id).first()
+        if record.uid != int(uid):
+            raise Exception("Attempted to delete a record that belongs to another user.")
+        record.value = int(value)
+        record.datetime = datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M")
+        record.save()
+
+        return _send_records(uid)
     except Exception as e:
         return HttpResponse(str(e))
 
 def truncate(request, uid):
-    Record.objects.all().delete()
-    return HttpResponse(
-                json.dumps(
-                    jsonify_list(
-                        _get_all_records(int(uid))
-                    )
-                ), content_type="application/json"
-            )
-    
+    try:
+        Record.objects.all().delete()
+        return _send_records(uid)
+    except Exception as e:
+        return HttpResponse(str(e))
 
-def fetch(requiest, uid): 
-    a = jsonify_list(
-                _get_all_records(int(uid))
+def fetch(request, uid): 
+    return _send_records(uid)
+    
+def _send_records(uid):
+    return HttpResponse(
+            json.dumps(
+                _jsonify_list(
+                    _get_all_records(int(uid))
                 )
-    for i in a:
-        print(i)
+            ), content_type="application/json"
+        )
 
-    return HttpResponse(
-        json.dumps(a), content_type="application/json"
-    )
-    
-
-def jsonify_list(records: List[Record]):
+def _jsonify_list(records: List[Record]):
     return [record.as_json() for record in records]
 
 def _get_all_records(uid) -> List[Record]: 

@@ -51,7 +51,7 @@ class Model {
     }
 
     getDefaultRecord(): Record {
-        return new Record(this.middleValue, dayjs());
+        return new Record(this.middleValue, dayjs(), -1);
     }
 
     constructor(title: string, minValue: number, maxValue: number, labels: string[], imageSources: string[]) {

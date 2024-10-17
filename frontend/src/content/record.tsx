@@ -43,10 +43,10 @@ class Record {
         this.#datetime = value
     }
 
-    constructor(value: number, datetime: Dayjs, id: number | null = null) {
+    constructor(value: number, datetime: Dayjs, id: number) {
         this.#datetime = datetime
         this.#value = value
-        this.#id = id === null ? Record.#generateTemporalId() : id
+        this.#id = id
     }
 }
 

@@ -1,4 +1,4 @@
-import { Flex } from "antd";
+import { Flex, Card } from "antd";
 import React, { useState } from "react";
 import { fullFillStyle } from "./styles.tsx"
 import Record from "./record.tsx"
@@ -29,14 +29,17 @@ const Workspace: React.FC = ()=> {
     );
 
     return (
-        <Flex style={fullFillStyle} gap="middle">
-            <div style={{width: "30%"}}>
-                <RecordsList records={records} setRecords={setRecords} model={model}/>
-            </div>
-            <div style={{width: "70%"}}>
-                <PlotCard/>
-            </div>
-        </Flex>
+        <Card style={fullFillStyle} >
+            <Flex gap="middle">
+                <div style={{width: "30%"}}>
+                    <RecordsList records={records} setRecords={setRecords} model={model}/>
+                </div>
+                <div style={{width: "70%"}}>
+                    
+                </div>
+            </Flex>
+        </Card>
+
     )
 }
 

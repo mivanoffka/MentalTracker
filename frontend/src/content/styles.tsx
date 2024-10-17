@@ -13,7 +13,18 @@ export const fullFillStyle: CSSProperties = {
     height: "100%"
 };
 
-export const editAndRemoveButtonStyle: CSSProperties = {
-    width: "10px",
-    height: "10px"
+export const textButtonStyle: CSSProperties = {
+    width: "8px",
+    height: "24px",
+    borderWidth: "0",
+}
+
+export const editButtonStyle: CSSProperties = {
+    ...textButtonStyle,
+    color: "#3078F6"
+}
+
+export const deleteButtonStyle: CSSProperties = {
+    ...textButtonStyle,
+    color: "#E14D3E"
 }
