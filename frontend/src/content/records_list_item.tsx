@@ -6,7 +6,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-
 interface RecordsListItemProps {
     record: Record;
     model: Model;
@@ -31,22 +30,20 @@ const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model}: Record
     }
 
     return (
-        <List.Item
-            key={record.id}
-            actions={[<a key="edit"><EditOutlined/></a>, <a key="delete"><DeleteOutlined/></a>]}
-            style={{alignItems: "center", display: "flex", width: "100%", height: "100%", justifyContent: "space-between"}}>
-            <div style={{alignItems: "center", display: "flex", gap: "10px", width: "100%"}}>
-                <img height="40" width="40" src={model.getImageSource(record.value)} alt="status" />
-                <Flex vertical style={{width: "85px"}} >
-                    <b>{model.getLabel(record.value)}</b>
-                    <div style={{fontSize: "10px"}}>{date()}</div>
+            <List.Item
+                key={record.id}
+                actions={[<a key="edit"><EditOutlined/></a>, <a key="delete"><DeleteOutlined/></a>]}
+                style={{alignItems: "center", display: "flex", width: "100%", height: "100%", justifyContent: "space-between"}}>
+                <div style={{alignItems: "center", display: "flex", gap: "10px", width: "100%"}}>
+                    <img height="40" width="40" src={model.getImageSource(record.value)} alt="status" />
+                    <Flex vertical style={{width: "85px"}} >
+                        <b>{model.getLabel(record.value)}</b>
+                        <div style={{fontSize: "10px"}}>{date()}</div>
 
-                </Flex>
-            </div>
+                    </Flex>
+                </div>
 
-        </List.Item>
-
-        
+            </List.Item>        
     )
 }
 

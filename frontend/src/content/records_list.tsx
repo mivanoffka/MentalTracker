@@ -95,7 +95,11 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
                             style={{width: '100%', height: "500px", overflow: "auto"}}
                             bordered
                             dataSource={records.slice().reverse()}
-                            renderItem={(record) => RecordsListItem({record, model})}>
+                            renderItem={(record) => 
+                            <RecordsListItem
+                                record={record}
+                                model={model}>
+                            </RecordsListItem>}>
                         </List>
                     <Flex gap="middle" style={fullWidthStyle}>
                         <Button style={{width: '70%'}} onClick={openEditor} type="primary">Внести</Button>
