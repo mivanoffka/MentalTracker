@@ -8,7 +8,7 @@ import Model from "./model.tsx";
 
 const Workspace: React.FC = ()=> {
     const [records, setRecords] = useState<Record[]>([]);
-
+    const [uid, setUid] = useState<number>(0);
 
     const model: Model = new Model(
         "Настроение", 0, 600,
@@ -32,7 +32,7 @@ const Workspace: React.FC = ()=> {
         <Card style={fullFillStyle} >
             <Flex gap="middle">
                 <div style={{width: "30%"}}>
-                    <RecordsList records={records} setRecords={setRecords} model={model}/>
+                    <RecordsList records={records} setRecords={setRecords} model={model} uid={uid} setUid={setUid}/>
                 </div>
                 <div style={{width: "70%"}}>
                     

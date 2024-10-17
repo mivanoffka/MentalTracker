@@ -1,5 +1,5 @@
-import {Button, Card, Flex, List } from "antd";
-import React, {useEffect, useState } from "react";
+import {Button, Card, Flex, List, Input } from "antd";
+import React, {ChangeEventHandler, useEffect, useState } from "react";
 import { fullFillStyle, fullWidthStyle } from "./styles.tsx"
 import Record from "./record.tsx";
 import RecordsListItem from "./records_list_item.tsx";
@@ -12,9 +12,11 @@ interface RecordsListProps {
     records: Record[];
     setRecords: (records: Record[]) => void;
     model: Model;
+    uid: number;
+    setUid: (value: number) => void;
 }
 
-const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: RecordsListProps)=> {
+const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, uid, setUid}: RecordsListProps)=> {
     const [editorOpened, setEditorOpened] = useState<boolean>(false);
     const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
 
@@ -28,12 +30,16 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
         setEditorOpened(true)
     }
 
+    function applyIdEdit(event: React.FormEvent<HTMLInputElement>) {
+        setUid(Number(event.currentTarget.value))
+    }
+
     useEffect(() => {
         fetchRecords()
-    }, [])
+    }, [uid])
 
     function fetchRecords() {
-        axios.get('http://localhost:8000/records/fetch/uid=10')
+        axios.get('http://localhost:8000/records/fetch/uid=' + uid)
         .then(
             response  => {
                 let records: Record[] = []
@@ -60,7 +66,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     }
 
     function addRecord(record: Record) {
-        let query = 'http://localhost:8000/records/add/uid=10&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")
+        let query = 'http://localhost:8000/records/add/uid=' + uid + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")
         axios.get(query)
         .then(
             response  => {
@@ -79,7 +85,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     }
 
     function updateRecord(record: Record) {
-        let query = 'http://localhost:8000/records/update/uid=10&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")
+        let query = 'http://localhost:8000/records/update/uid=' + uid + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")
         axios.get(query)
         .then(
             response  => {
@@ -116,7 +122,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     }
 
     function deleteRecord(record: Record) {
-        let query = 'http://localhost:8000/records/delete/uid=10&id=' + record.id
+        let query = 'http://localhost:8000/records/delete/uid=' + uid + '&id=' + record.id
             axios.get(query)
             .then(
                 response  => {
@@ -136,7 +142,6 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
 
     return (
         <>
-            {/* <Card style={fullFillStyle}> */}
                 <Flex vertical gap="middle" align="center" justify="center" style={fullWidthStyle}>
                         <List
                             style={{width: '100%', height: "500px", overflow: "auto"}}
@@ -152,10 +157,10 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
                         </List>
                     <Flex gap="middle" style={fullWidthStyle}>
                         <Button style={{width: '70%'}} onClick={openEditor} type="primary">Внести</Button>
-                        <Button style={{width: '30%'}} onClick={truncate}>Очистить</Button>
+                        {/* <Button style={{width: '30%'}} onClick={truncate}>Очистить</Button> */}
+                        <Input style={{width: '30%'}} value={uid} onChange={applyIdEdit} placeholder="User identificator"></Input>
                     </Flex>
                 </Flex>
-            {/* </Card> */}
 
             <Editor model={model}
                     opened={editorOpened} setOpened={setEditorOpened}

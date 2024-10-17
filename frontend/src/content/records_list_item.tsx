@@ -5,6 +5,7 @@ import Model from "./model.tsx";
 import dayjs from "dayjs";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { editButtonStyle} from "./styles.tsx";
+import Confirmator from "./confirmator.tsx"
 
 interface RecordsListItemProps {
     record: Record;
@@ -38,6 +39,12 @@ const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model, deleteR
     function editSelectedRecord() {
         openEditor(record)
     }
+
+    function opedConfirmator() {
+        setOpened(true);
+    }
+
+    const [opened, setOpened] = React.useState<boolean>(false);
  
     return (
             <List.Item
@@ -54,11 +61,16 @@ const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model, deleteR
                     <Button style={editButtonStyle} onClick={editSelectedRecord}>
                         <EditOutlined></EditOutlined>
                     </Button>
-                    <Button style={editButtonStyle} onClick={deleteSelectedRecord}>
+                    <Button style={editButtonStyle} onClick={opedConfirmator}>
                         <DeleteOutlined color="red"></DeleteOutlined>
                     </Button>
                 </Flex>
 
+                <Confirmator opened={opened} setOpened={setOpened} 
+                             prompt = "Удалить эту запись?"
+                             onYes={deleteSelectedRecord} onNo={null}>
+
+                </Confirmator>
 
             </List.Item>        
     )
