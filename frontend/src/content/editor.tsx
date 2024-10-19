@@ -1,4 +1,4 @@
-import {Button, DatePicker, TimePicker, Flex, Modal, Slider, Switch } from "antd"
+import {Button, DatePicker, Flex, Modal, Slider, Switch } from "antd"
 import Model from "./model.tsx";
 import Record from "./record.tsx";
 import React, {useEffect, useState } from "react";
@@ -112,3 +112,6 @@ const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord
 }
 
 export default Editor
+
+
+

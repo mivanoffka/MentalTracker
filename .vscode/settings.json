@@ -2,5 +2,11 @@
     "editor.fontFamily": "\"JetBrains Mono\", Menlo, Monaco, 'Courier New', monospace",
     "editor.renderWhitespace": "selection",
     "vite.base": "frontend",
-    "vite.buildCommand": "npm run dev"
+    "vite.buildCommand": "npm run dev",
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "editor.fontSize": 12,
+    "editor.fontWeight": "600",
+    "workbench.tree.indent": 24
 }

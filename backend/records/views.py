@@ -5,7 +5,7 @@ from .models import Record
 from typing import List
 import json
 
-def add_record(request, uid, value, datetime):
+def add(request, uid, value, datetime):
     try:
         record = Record.objects.create(uid=uid, value=int(value), datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M"))
         record.save()
@@ -14,7 +14,7 @@ def add_record(request, uid, value, datetime):
     except Exception as e:
         return HttpResponse(str(e))
     
-def delete_record(request, uid, id):
+def delete(request, uid, id):
     try:
         record: Record = Record.objects.filter(id=id).first()
         if record.uid != int(uid):
@@ -25,7 +25,7 @@ def delete_record(request, uid, id):
     except Exception as e:
         return HttpResponse(str(e))
 
-def update_record(request, uid, id, value, datetime):
+def update(request, uid, id, value, datetime):
     try:
         record: Record = Record.objects.filter(id=id).first()
         if record.uid != int(uid):

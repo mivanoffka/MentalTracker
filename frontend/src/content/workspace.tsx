@@ -35,7 +35,9 @@ const Workspace: React.FC = ()=> {
                     <RecordsList records={records} setRecords={setRecords} model={model} uid={uid} setUid={setUid}/>
                 </div>
                 <div style={{width: "70%"}}>
-                    
+                    <PlotCard records={records}>
+                        
+                    </PlotCard>
                 </div>
             </Flex>
         </Card>
