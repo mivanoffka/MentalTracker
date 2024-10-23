@@ -6,13 +6,18 @@
 			"script": "dev",
 			"path": "frontend",
 			"problemMatcher": [],
-			"label": "npm: dev - frontend",
+			"label": "frontend",
 			"detail": "vite"
 		},
 		{
+			"label": "backend",
 			"type": "shell",
-			"label": "cd frontend",
-			"command": "cd frontend"
+			"command": "${workspaceFolder}/backend/.venv/bin/python ${workspaceFolder}/backend/manage.py runserver",
+			"group": {
+			"kind": "build",
+			"isDefault": true
+			},
+			"problemMatcher": []
 		}
 	]
 }

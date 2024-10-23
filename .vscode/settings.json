@@ -7,6 +7,5 @@
         "javascript": "javascriptreact"
     },
     "editor.fontSize": 12,
-    "editor.fontWeight": "600",
     "workbench.tree.indent": 24
 }
