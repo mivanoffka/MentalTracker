@@ -17,6 +17,9 @@ export const textButtonStyle: CSSProperties = {
     width: "8px",
     height: "24px",
     borderWidth: "0",
+    background: "transparent",
+    boxShadow: "none",
+    textShadow: "none"
 }
 
 export const editButtonStyle: CSSProperties = {

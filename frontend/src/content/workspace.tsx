@@ -26,7 +26,9 @@ const Workspace: React.FC = ()=> {
             "https://em-content.zobj.net/source/microsoft-teams/363/neutral-face_1f610.png",
             "https://em-content.zobj.net/source/microsoft-teams/363/slightly-smiling-face_1f642.png",
             "https://em-content.zobj.net/source/microsoft-teams/363/smiling-face-with-smiling-eyes_1f60a.png"
-        ]
+        ],
+        "#3078F6",
+        'CCDFFF'
     );
 
     return (

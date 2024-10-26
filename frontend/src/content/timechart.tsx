@@ -1,93 +1,91 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { fullFillStyle } from './styles';
-import Model from './model.tsx'
+import Model from './model.tsx';
 
 interface DateTimeChartProps {
     model: Model;
     points: (string | number)[][];
 }
 
-function DateTimeChart({model, points}: DateTimeChartProps): ReactElement<DateTimeChartProps> {
+function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<DateTimeChartProps> {
     function options() {
         return {
             series: [{
-              name: 'Настроение',
-              data: points
+                name: 'Настроение',
+                data: points,
+                color: model.primaryColor
             }],
             options: {
-              chart: {
-                type: 'area',
-                stacked: false,
-                zoom: {
-                  type: 'x',
-                  enabled: true,
-                  autoScaleYaxis: true
+                chart: {
+                    type: 'area',
+                    stacked: false,
+                    zoom: {
+                        type: 'x',
+                        enabled: true,
+                        autoScaleYaxis: true
+                    },
+                    toolbar: {
+                        show: false
+                    }
                 },
-                toolbar: {
-                  autoSelected: 'zoom'
-                }
-              },
-              dataLabels: {
-                enabled: false
-              },
-              markers: {
-                size: 0,
-              },
-              // title: {
-              //   text: 'Динамика настроения',
-              //   align: 'center',
-              //   style: {
-              //     fontSize: "24px"
-              //   }
-              // },
-              fill: {
-                type: 'gradient',
-                gradient: {
-                  shadeIntensity: 1,
-                  inverseColors: false,
-                  opacityFrom: 0.5,
-                  opacityTo: 0,
-                  stops: [0, 90, 100]
+                dataLabels: {
+                    enabled: false
                 },
-              },
-              yaxis: {
-                labels: {
-                  formatter: function (val: number) {
-                    return model.getLabel(val)
-                  },
-                  align: "left",
-                  style: {
-                    fontSize: "14px",
-                    
-                }
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        inverseColors: false,
+                        opacityFrom: 0.5,
+                        opacityTo: 0,
+                        stops: [0, 90, 100],
+                        colorStops: [
+                          {
+                              offset: 0,
+                              color: model.primaryColor,
+                              opacity: 0.5
+                          },
+                          {
+                              offset: 100,
+                              color: model.primaryColor,
+                              opacity: 0
+                          }
+                      ]
+                    }
                 },
-                min: model.minValue,
-                max: model.maxValue,
-                tickAmount: 4,
-
-              },
-              xaxis: {
-                type: 'datetime',
-              },
-              tooltip: {
-                shared: false,
-                y: {
-                  formatter: function (val: number) {
-                    return model.getLabel(val)
-                  }
-                }
-              }
+                yaxis: {
+                    labels: {
+                        formatter: function (val: number) {
+                            return model.getLabel(val);
+                        },
+                        style: {
+                            fontSize: '14px',
+                        }
+                    },
+                    min: model.minValue,
+                    max: model.maxValue,
+                    tickAmount: 4
+                },
+                xaxis: {
+                    type: 'datetime',
+                },
+                tooltip: {
+                    shared: false,
+                    y: {
+                        formatter: function (val: number) {
+                            return model.getLabel(val);
+                        }
+                    }
+                },
             }
-          }
+        };
     }
 
-  return (
-
-<>
+    return (
+        <>
             <ReactApexChart height="100%" options={options().options} series={options().series} type="area" />
         </>
-  );
-};
+    );
+}
 
 export default DateTimeChart;

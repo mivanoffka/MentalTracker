@@ -4,7 +4,7 @@ import Record from "./record.tsx";
 import Model from "./model.tsx";
 import dayjs from "dayjs";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { editButtonStyle} from "./styles.tsx";
+import { editButtonStyle, textButtonStyle} from "./styles.tsx";
 import Confirmator from "./confirmator.tsx"
 
 interface RecordsListItemProps {
@@ -58,10 +58,10 @@ const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model, deleteR
                     </Flex>
                 </div>
                 <Flex>
-                    <Button style={editButtonStyle} onClick={editSelectedRecord}>
+                    <Button style={{...textButtonStyle, color: model.primaryColor}} onClick={editSelectedRecord}>
                         <EditOutlined></EditOutlined>
                     </Button>
-                    <Button style={editButtonStyle} onClick={opedConfirmator}>
+                    <Button style={{...textButtonStyle, color: model.primaryColor}} onClick={opedConfirmator}>
                         <DeleteOutlined color="red"></DeleteOutlined>
                     </Button>
                 </Flex>

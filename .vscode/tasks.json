@@ -12,12 +12,22 @@
 		{
 			"label": "backend",
 			"type": "shell",
-			"command": "${workspaceFolder}/backend/.venv/bin/python ${workspaceFolder}/backend/manage.py runserver",
+			"command": "${workspaceFolder}/backend/.venv/bin/python",
+			"args": ["${workspaceFolder}/backend/manage.py", "runserver"],
 			"group": {
-			"kind": "build",
-			"isDefault": true
+			  "kind": "build",
+			  "isDefault": true
 			},
-			"problemMatcher": []
-		}
+			"problemMatcher": [],
+			"windows": {
+			  "command": "${workspaceFolder}\\backend\\.venv\\Scripts\\python.exe"
+			},
+			"linux": {
+			  "command": "${workspaceFolder}/backend/.venv/bin/python"
+			},
+			"osx": {
+			  "command": "${workspaceFolder}/backend/.venv/bin/python"
+			}
+		  }
 	]
 }

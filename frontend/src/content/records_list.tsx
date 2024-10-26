@@ -156,7 +156,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
                             </RecordsListItem>}>
                         </List>
                     <Flex gap="middle" style={fullWidthStyle}>
-                        <Button style={{width: '70%'}} onClick={openEditor} type="primary">Внести</Button>
+                        <Button style={{width: '70%', background: model.primaryColor}} type="primary" onClick={openEditor}>Внести</Button>
                         {/* <Button style={{width: '30%'}} onClick={truncate}>Очистить</Button> */}
                         <Input style={{width: '30%'}} value={uid} onChange={applyIdEdit} placeholder="User identificator"></Input>
                     </Flex>
