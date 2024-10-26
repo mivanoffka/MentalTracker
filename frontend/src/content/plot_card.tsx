@@ -5,9 +5,12 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import Record from "./record.tsx"
 import duration from 'dayjs/plugin/duration'
 import ApexChart from "./timechart.tsx"
+import Model from "./model.tsx"
+import dayjs from "dayjs";
 
 
 interface PlotCardProps {
+  model: Model;
   records: Record[];
 }
 
@@ -21,26 +24,24 @@ class Point {
     }
 }
 
-
-const PlotCard: React.FC<PlotCardProps> = ({records})=> {
-    function recordsToPoints(records: Record[]) {
-        const minDateRecord = records.reduce((min, record) => {
-          return record.datetime < min.datetime ? record : min;
-        });
-
-        let points: Point[] = []
+const PlotCard: React.FC<PlotCardProps> = ({model, records})=> {
+    function recordsToPoints() {
+        if (records.length == 0) {
+            return []
+        }
+        let points: (string | number)[][] = [];
 
         for (let i = 0; i < records.length; i++) {
             const record = records[i];
-            points.push(new Point(-minDateRecord.datetime.diff(record.datetime, "minute"), record.value))
+            points.push([record.datetime.toISOString(), record.value])
         }
 
-        return points;
+        return points
     }  
 
 
     return (
-            <ApexChart style={fullFillStyle}>
+            <ApexChart model={model} points={recordsToPoints()}>
 
             </ApexChart>
     )

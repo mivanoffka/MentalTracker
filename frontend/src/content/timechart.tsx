@@ -1,85 +1,93 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { fullFillStyle } from './styles';
+import Model from './model.tsx'
 
-const ApexChart = () => {
-  // Пример данных с временными метками и значениями
-  const dates = [
-    ['2023-10-01T00:00:00', 4500000],
-    ['2023-10-02T00:00:00', 4600000],
-    ['2023-10-03T00:00:00', 4700000],
-    ['2023-10-04T00:00:00', 4800000],
-    ['2023-10-05T00:00:00', 4900000],
-  ];
+interface DateTimeChartProps {
+    model: Model;
+    points: (string | number)[][];
+}
 
-  // Используем useState для хранения состояния
-  const [chartOptions] = useState({
-    series: [{
-      name: 'XYZ MOTORS',
-      data: dates
-    }],
-    options: {
-      chart: {
-        type: 'area',
-        stacked: false,
-        height: 350,
-        zoom: {
-          type: 'x',
-          enabled: true,
-          autoScaleYaxis: true
-        },
-        toolbar: {
-          autoSelected: 'zoom'
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      markers: {
-        size: 0,
-      },
-      title: {
-        text: 'Stock Price Movement',
-        align: 'left'
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shadeIntensity: 1,
-          inverseColors: false,
-          opacityFrom: 0.5,
-          opacityTo: 0,
-          stops: [0, 90, 100]
-        },
-      },
-      yaxis: {
-        labels: {
-          formatter: function (val) {
-            return (val / 1000000).toFixed(0);
-          },
-        },
-        title: {
-          text: 'Price'
-        },
-      },
-      xaxis: {
-        type: 'datetime',
-      },
-      tooltip: {
-        shared: false,
-        y: {
-          formatter: function (val) {
-            return (val / 1000000).toFixed(0);
+function DateTimeChart({model, points}: DateTimeChartProps): ReactElement<DateTimeChartProps> {
+    function options() {
+        return {
+            series: [{
+              name: 'Настроение',
+              data: points
+            }],
+            options: {
+              chart: {
+                type: 'area',
+                stacked: false,
+                zoom: {
+                  type: 'x',
+                  enabled: true,
+                  autoScaleYaxis: true
+                },
+                toolbar: {
+                  autoSelected: 'zoom'
+                }
+              },
+              dataLabels: {
+                enabled: false
+              },
+              markers: {
+                size: 0,
+              },
+              // title: {
+              //   text: 'Динамика настроения',
+              //   align: 'center',
+              //   style: {
+              //     fontSize: "24px"
+              //   }
+              // },
+              fill: {
+                type: 'gradient',
+                gradient: {
+                  shadeIntensity: 1,
+                  inverseColors: false,
+                  opacityFrom: 0.5,
+                  opacityTo: 0,
+                  stops: [0, 90, 100]
+                },
+              },
+              yaxis: {
+                labels: {
+                  formatter: function (val: number) {
+                    return model.getLabel(val)
+                  },
+                  align: "left",
+                  style: {
+                    fontSize: "14px",
+                    
+                }
+                },
+                min: model.minValue,
+                max: model.maxValue,
+                tickAmount: 4,
+
+              },
+              xaxis: {
+                type: 'datetime',
+              },
+              tooltip: {
+                shared: false,
+                y: {
+                  formatter: function (val: number) {
+                    return model.getLabel(val)
+                  }
+                }
+              }
+            }
           }
-        }
-      }
     }
-  });
 
   return (
-        <ReactApexChart style={fullFillStyle}
-        options={chartOptions.options} series={chartOptions.series} type="area" height={350} />
+
+<>
+            <ReactApexChart height="100%" options={options().options} series={options().series} type="area" />
+        </>
   );
 };
 
-export default ApexChart;
+export default DateTimeChart;

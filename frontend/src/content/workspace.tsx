@@ -1,5 +1,5 @@
 import { Flex, Card } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fullFillStyle } from "./styles.tsx"
 import Record from "./record.tsx"
 import RecordsList from "./records_list.tsx";
@@ -10,8 +10,9 @@ const Workspace: React.FC = ()=> {
     const [records, setRecords] = useState<Record[]>([]);
     const [uid, setUid] = useState<number>(0);
 
+
     const model: Model = new Model(
-        "Настроение", 0, 600,
+        "Настроение", 0, 1000,
         [
             "Плохо",
             "Не очень",
@@ -35,7 +36,7 @@ const Workspace: React.FC = ()=> {
                     <RecordsList records={records} setRecords={setRecords} model={model} uid={uid} setUid={setUid}/>
                 </div>
                 <div style={{width: "70%"}}>
-                    <PlotCard records={records}>
+                    <PlotCard model={model} records={records}>
                         
                     </PlotCard>
                 </div>
