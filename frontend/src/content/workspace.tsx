@@ -16,6 +16,7 @@ const Workspace: React.FC = ()=> {
 
 
     const model: Model = new Model(
+        0,
         "Настроение", 0, 1000,
         [
             "Плохо",

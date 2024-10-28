@@ -2,6 +2,7 @@ import dayjs from "dayjs"
 import Record from "./record.tsx"
 
 class Model {
+    #index: number
     #title: string
     #minValue: number
     #maxValue: number
@@ -64,7 +65,12 @@ class Model {
         return new Record(this.middleValue, dayjs(), -1);
     }
 
-    constructor(title: string, minValue: number, maxValue: number, labels: string[], imageSources: string[], primaryColor: string, secondaryColor: string) {
+    get index(): number {
+        return this.#index
+    }
+
+    constructor(index: number, title: string, minValue: number, maxValue: number, labels: string[], imageSources: string[], primaryColor: string, secondaryColor: string) {
+        this.#index = index
         this.#title = title
         this.#minValue = minValue
         this.#maxValue = maxValue

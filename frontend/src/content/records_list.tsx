@@ -39,7 +39,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     }, [uid])
 
     function fetchRecords() {
-        axios.get('http://localhost:8000/records/fetch/uid=' + uid)
+        axios.get('http://localhost:8000/records/fetch/uid=' + uid + "&model=" + model.index)
         .then(
             response  => {
                 let records: Record[] = []
@@ -66,7 +66,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     }
 
     function addRecord(record: Record) {
-        let query = 'http://localhost:8000/records/add/uid=' + uid + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")
+        let query = 'http://localhost:8000/records/add/uid=' + uid + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
         axios.get(query)
         .then(
             response  => {
@@ -85,7 +85,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     }
 
     function updateRecord(record: Record) {
-        let query = 'http://localhost:8000/records/update/uid=' + uid + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")
+        let query = 'http://localhost:8000/records/update/uid=' + uid + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
         axios.get(query)
         .then(
             response  => {
@@ -122,7 +122,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     }
 
     function deleteRecord(record: Record) {
-        let query = 'http://localhost:8000/records/delete/uid=' + uid + '&id=' + record.id
+        let query = 'http://localhost:8000/records/delete/uid=' + uid + '&id=' + record.id + "&model=" + model.index
             axios.get(query)
             .then(
                 response  => {
