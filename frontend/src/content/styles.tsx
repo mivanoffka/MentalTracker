@@ -19,7 +19,8 @@ export const textButtonStyle: CSSProperties = {
     borderWidth: "0",
     background: "transparent",
     boxShadow: "none",
-    textShadow: "none"
+    textShadow: "none",
+    fontSize: "16px"
 }
 
 export const editButtonStyle: CSSProperties = {

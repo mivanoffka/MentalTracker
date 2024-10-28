@@ -5,7 +5,8 @@ import Model from "./model.tsx";
 import dayjs from "dayjs";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { editButtonStyle, textButtonStyle} from "./styles.tsx";
-import Confirmator from "./confirmator.tsx"
+import Confirmator from "./confirmator.tsx";
+import { theme } from 'antd';
 
 interface RecordsListItemProps {
     record: Record;
@@ -45,6 +46,7 @@ const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model, deleteR
     }
 
     const [opened, setOpened] = React.useState<boolean>(false);
+    const {token} = theme.useToken();
  
     return (
             <List.Item
@@ -53,15 +55,15 @@ const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model, deleteR
                 <div style={{alignItems: "center", display: "flex", gap: "10px", width: "100%"}}>
                     <img height="40" width="40" src={model.getImageSource(record.value)} alt="status" />
                     <Flex vertical style={{width: "140px"}} >
-                        <b>{model.getLabel(record.value)}</b>
+                        <b style={{fontSize: "14px"}}>{model.getLabel(record.value)}</b>
                         <div style={{fontSize: "10px"}}>{date()}</div>
                     </Flex>
                 </div>
                 <Flex>
-                    <Button style={{...textButtonStyle, color: model.primaryColor}} onClick={editSelectedRecord}>
+                    <Button style={{...textButtonStyle, color: token.colorPrimary}} onClick={editSelectedRecord}>
                         <EditOutlined></EditOutlined>
                     </Button>
-                    <Button style={{...textButtonStyle, color: model.primaryColor}} onClick={opedConfirmator}>
+                    <Button style={{...textButtonStyle, color: token.colorPrimary}} onClick={opedConfirmator}>
                         <DeleteOutlined color="red"></DeleteOutlined>
                     </Button>
                 </Flex>

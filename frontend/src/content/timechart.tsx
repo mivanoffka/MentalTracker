@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import Model from './model.tsx';
+import { theme } from 'antd';
 
 interface DateTimeChartProps {
     model: Model;
@@ -8,12 +9,14 @@ interface DateTimeChartProps {
 }
 
 function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<DateTimeChartProps> {
+    const {token} = theme.useToken();
+
     function options() {
         return {
             series: [{
                 name: 'Настроение',
                 data: points,
-                color: model.primaryColor
+                color: token.colorPrimary
             }],
             options: {
                 chart: {
@@ -42,12 +45,12 @@ function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<Date
                         colorStops: [
                           {
                               offset: 0,
-                              color: model.primaryColor,
+                              color: token.colorPrimary,
                               opacity: 0.5
                           },
                           {
                               offset: 100,
-                              color: model.primaryColor,
+                              color: token.colorPrimary,
                               opacity: 0
                           }
                       ]
@@ -59,7 +62,7 @@ function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<Date
                             return model.getLabel(val);
                         },
                         style: {
-                            fontSize: '14px',
+                            fontSize: '13px',
                         }
                     },
                     min: model.minValue,
