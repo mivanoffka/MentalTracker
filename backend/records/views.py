@@ -7,8 +7,9 @@ import json
 
 def add(request, uid, value, datetime, model):
     try:
-        record = Record.objects.create(uid=uid, value=int(value), datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M"))
+        record = Record.objects.create(uid=uid, value=int(value), datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M"), model_id=model)
         record.save()
+        return _send_records(uid, model)
 
         return _send_records(uid, model)
     except Exception as e:
