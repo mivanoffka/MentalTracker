@@ -1,7 +1,6 @@
 from django.db import models
 
 class Record(models.Model):
-    id = models.IntegerField(primary_key=True)
     uid = models.IntegerField()
     value = models.IntegerField()
     datetime = models.DateTimeField(null=True)

@@ -63,6 +63,7 @@ function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<Date
                         },
                         style: {
                             fontSize: '13px',
+                            width: "50px",
                         }
                     },
                     min: model.minValue,

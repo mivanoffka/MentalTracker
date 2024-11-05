@@ -36,7 +36,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
 
     useEffect(() => {
         fetchRecords()
-    }, [uid])
+    }, [uid, model])
 
     function fetchRecords() {
         axios.get('http://localhost:8000/records/fetch/uid=' + uid + "&model=" + model.index)
@@ -87,24 +87,6 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     function updateRecord(record: Record) {
         let query = 'http://localhost:8000/records/update/uid=' + uid + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
         axios.get(query)
-        .then(
-            response  => {
-                let records: Record[] = []
-                for (let key in response.data) {
-                    let record = response.data[key]
-                    records.push(new Record(record["value"], dayjs(record["datetime"], "DD-MM-YYYY-HH:mm"), record["key"]))
-                }
-                setRecords(records)
-            })
-        .catch(
-            error => {
-                alert(error)
-            }
-        )
-    }
-
-    function truncate() {
-        axios.get('http://localhost:8000/records/truncate/uid=10')
         .then(
             response  => {
                 let records: Record[] = []

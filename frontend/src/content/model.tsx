@@ -10,6 +10,7 @@ class Model {
     #imageSources: string[]
     #primaryColor: string
     #secondaryColor: string
+    #defaultValue: number
 
     get title(): string {
         return this.#title
@@ -42,6 +43,10 @@ class Model {
     get secondaryColor() : string {
         return this.#secondaryColor
     }
+    
+    get defaultValue() : number {
+        return this.#defaultValue
+    }
 
     getCorrectedIndex(index: number, correctionRange: number): number {
         const indexCorrected = Math.floor(correctionRange * (index / (this.#maxValue - this.#minValue)))
@@ -62,14 +67,14 @@ class Model {
     }
 
     getDefaultRecord(): Record {
-        return new Record(this.middleValue, dayjs(), -1);
+        return new Record(this.defaultValue, dayjs(), -1);
     }
 
     get index(): number {
         return this.#index
     }
 
-    constructor(index: number, title: string, minValue: number, maxValue: number, labels: string[], imageSources: string[], primaryColor: string, secondaryColor: string) {
+    constructor(index: number, title: string, minValue: number, maxValue: number, defaultValue: number, labels: string[], imageSources: string[], primaryColor: string, secondaryColor: string) {
         this.#index = index
         this.#title = title
         this.#minValue = minValue
@@ -78,6 +83,7 @@ class Model {
         this.#imageSources = imageSources
         this.#primaryColor = primaryColor
         this.#secondaryColor = secondaryColor
+        this.#defaultValue = defaultValue
     }
 }
 
