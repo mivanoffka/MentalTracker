@@ -1,5 +1,6 @@
 import React, { createContext } from "react";
 import Workspace from "./workspace";
+import { Button } from "antd";
 
 interface User {
     name: string;
@@ -35,9 +36,14 @@ function AuthProvider() {
     function logout() {
         localStorage.removeItem('user.name');
         localStorage.removeItem('user.token');
+        setUser(null)
     }
 
-    const content = user ? <Workspace></Workspace> : <>Требуется авторизация</>
+    function emulateLogin() {
+        login({name: "0", token: "0"})
+    }
+
+    const content = user ? <Workspace></Workspace> : <>Требуется авторизация <Button onClick={emulateLogin}>Войти</Button></>
 
     return (
         <AuthContext.Provider value={{user, login, logout}}>

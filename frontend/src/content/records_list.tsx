@@ -7,18 +7,18 @@ import Model from "./model.tsx";
 import Editor from "./editor.tsx";
 import dayjs from "dayjs";
 import axios from "axios"
+import { AuthContext } from "./authcontext.tsx";
 
 interface RecordsListProps {
     records: Record[];
     setRecords: (records: Record[]) => void;
     model: Model;
-    uid: number;
-    setUid: (value: number) => void;
 }
 
-const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, uid, setUid}: RecordsListProps)=> {
+const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: RecordsListProps)=> {
     const [editorOpened, setEditorOpened] = useState<boolean>(false);
     const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
+    const {user, login, logout} = React.useContext(AuthContext);
 
     const openEditor = ()=> {
         setSelectedRecord(model.getDefaultRecord())
@@ -30,16 +30,12 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
         setEditorOpened(true)
     }
 
-    function applyIdEdit(event: React.FormEvent<HTMLInputElement>) {
-        setUid(Number(event.currentTarget.value))
-    }
-
     useEffect(() => {
         fetchRecords()
-    }, [uid, model])
+    }, [user, model])
 
     function fetchRecords() {
-        axios.get('http://localhost:8000/records/fetch/uid=' + uid + "&model=" + model.index)
+        axios.get('http://localhost:8000/records/fetch/uid=' + user.token + "&model=" + model.index)
         .then(
             response  => {
                 let records: Record[] = []
@@ -66,7 +62,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     }
 
     function addRecord(record: Record) {
-        let query = 'http://localhost:8000/records/add/uid=' + uid + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
+        let query = 'http://localhost:8000/records/add/uid=' + user.token + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
         axios.get(query)
         .then(
             response  => {
@@ -85,7 +81,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     }
 
     function updateRecord(record: Record) {
-        let query = 'http://localhost:8000/records/update/uid=' + uid + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
+        let query = 'http://localhost:8000/records/update/uid=' + user.token + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
         axios.get(query)
         .then(
             response  => {
@@ -104,7 +100,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
     }
 
     function deleteRecord(record: Record) {
-        let query = 'http://localhost:8000/records/delete/uid=' + uid + '&id=' + record.id + "&model=" + model.index
+        let query = 'http://localhost:8000/records/delete/uid=' + user.token + '&id=' + record.id + "&model=" + model.index
             axios.get(query)
             .then(
                 response  => {
@@ -138,11 +134,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model, ui
                             </RecordsListItem>}>
                         </List>
                     <Flex gap="middle" style={fullWidthStyle}>
-                        {/* <Button style={{width: '70%', background: model.primaryColor}} type="primary" onClick={openEditor}>Внести</Button> */}
-                        <Button style={{width: '70%'}} type="primary" onClick={openEditor}>Внести</Button>
-
-                        {/* <Button style={{width: '30%'}} onClick={truncate}>Очистить</Button> */}
-                        <Input style={{width: '30%'}} value={uid} onChange={applyIdEdit} placeholder="User identificator"></Input>
+                        <Button style={fullWidthStyle} type="primary" onClick={openEditor}>Внести</Button>
                     </Flex>
                 </Flex>
 
