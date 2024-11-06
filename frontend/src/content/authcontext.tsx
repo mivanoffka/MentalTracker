@@ -1,6 +1,7 @@
 import React, { createContext } from "react";
 import Workspace from "./workspace";
 import { Button } from "antd";
+import Auth from "./auth";
 
 interface User {
     name: string;
@@ -43,7 +44,7 @@ function AuthProvider() {
         login({name: "0", token: "0"})
     }
 
-    const content = user ? <Workspace></Workspace> : <>Требуется авторизация <Button onClick={emulateLogin}>Войти</Button></>
+    const content = user ? <Workspace></Workspace> : <Auth/>
 
     return (
         <AuthContext.Provider value={{user, login, logout}}>
