@@ -7,7 +7,7 @@ import { AuthContext } from "./authcontext"
 function Auth() {
     const [userName, setUserName] = React.useState<String>("")
     const [password, setPassword] = React.useState<String>("")
-    const { user, login } = React.useContext(AuthContext);
+    const { csrfToken, user, login } = React.useContext(AuthContext);
 
 
     function applyLoginInput(event: React.FormEvent<HTMLInputElement>) {

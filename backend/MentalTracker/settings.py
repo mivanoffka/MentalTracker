@@ -32,6 +32,18 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Ваш фронтенд на React
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173"
+]
+
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+SESSION_COOKIE_SAMESITE = 'Lax'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -63,8 +75,7 @@ ROOT_URLCONF = 'MentalTracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

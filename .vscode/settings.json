@@ -3,8 +3,18 @@
     "vite.base": "frontend",
     "vite.buildCommand": "npm run dev",
     "emmet.includeLanguages": {
-        "javascript": "javascriptreact"
+      "javascript": "javascriptreact"
     },
     "editor.fontSize": 12,
-    "workbench.tree.indent": 24
-}
+    "workbench.tree.indent": 24,
+    "flake8.interpreter": ["backend\\.venv\\Scripts\\python.exe"],
+    "settings": {
+      "windows": {
+        "flake8.interpreter": ["backend\\.venv\\Scripts\\python.exe"]
+      },
+      "macos": {
+        "flake8.interpreter": ["backend/.venv/bin/python"]
+      }
+    }
+  }
+  
