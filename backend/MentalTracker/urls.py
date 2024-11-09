@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.http import HttpResponse, JsonResponse
-from django.urls import path
+from django.urls import path, include
 from django.middleware.csrf import get_token
 from records import views as records_views
 
@@ -25,10 +25,6 @@ def get_csrf(request):
     response = JsonResponse({'detail': 'CSRF cookie set'})
     response['X-CSRFToken'] = get_token(request)
     return response
-
-
-def post(request):
-    return HttpResponse("OK")
 
 
 urlpatterns = [
@@ -40,5 +36,5 @@ urlpatterns = [
     path('records/delete/uid=<str:uid>&id=<str:id>&model=<str:model>', records_views.delete),
     path('records/update/uid=<str:uid>&id=<str:id>&value=<str:value>&datetime=<str:datetime>&model=<str:model>', records_views.update),
     path('csrf/', get_csrf),
-    path('post/', post)
+    path('accounts/', include('accounts.urls'))
 ]

@@ -1,8 +1,10 @@
-from django.http import HttpResponse
-from datetime import datetime as Datetime
-from .models import Record
-from typing import List
 import json
+from datetime import datetime as Datetime
+from typing import List
+
+from django.http import HttpResponse
+
+from .models import Record
 
 
 def add(request, uid, value, datetime, model):
@@ -29,7 +31,7 @@ def delete(request, uid, id, model):
 
 def update(request, uid, id, value, datetime, model):
     try:
-        record: Record = Record.objects.filter(id=id).first()
+        record = Record.objects.filter(id=id).first()
         if record.uid != int(uid):
             raise Exception("Attempted to delete a record that belongs to another user.")
         record.value = int(value)
@@ -39,7 +41,6 @@ def update(request, uid, id, value, datetime, model):
         return _send_records(uid, model)
     except Exception as e:
         return HttpResponse(str(e))
-
 
 def truncate(request, uid, model):
     try:

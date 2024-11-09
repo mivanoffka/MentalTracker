@@ -14,6 +14,8 @@ interface AuthContextType {
     user: User | null;
     login: (user: User) => void;
     logout: () => void;
+    signIn: (username: string, password: string) => void;
+    signUp: (username: string, password: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -47,6 +49,44 @@ function AuthProvider() {
         }
     }, [])
 
+    function signIn(username: string, password: string) {
+        axios.post(
+                "http://localhost:8000/accounts/signin/",
+                {"username": username, "password": password},
+                {withCredentials: true}
+                )
+        .then(result => {
+            if (result.data["isOk"] == "true") {
+                alert("Вы успешно вошли!")
+            }
+            else {
+                alert(result.data["message"])
+            }
+        })
+        .catch(error => {
+            alert(error)
+        })
+    }
+
+    function signUp(username: string, password: string) {
+        axios.post(
+                "http://localhost:8000/accounts/signup/",
+                {"username": username, "password": password},
+                {withCredentials: true}
+                )
+        .then(result => {
+            if (result.data["isOk"] == "true") {
+                alert("Вы успешно зарегистрированы!")
+            }
+            else {
+                alert(result.data["message"])
+            }
+        })
+        .catch(error => {
+            alert(error)
+        })
+    }
+
     function login(user: User) {
         axios.post("http://localhost:8000/post/", {}, {withCredentials: true})
         .then(result => {
@@ -70,7 +110,7 @@ function AuthProvider() {
     const content = user ? <Workspace></Workspace> : <Auth/>
 
     return (
-        <AuthContext.Provider value={{csrfToken, user, login, logout}}>
+        <AuthContext.Provider value={{csrfToken, user, login, logout, signIn, signUp}}>
             {content}
         </AuthContext.Provider>
     )
