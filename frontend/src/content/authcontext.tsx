@@ -2,7 +2,7 @@ import React, { createContext } from "react";
 import Workspace from "./workspace";
 import { Button } from "antd";
 import Auth from "./auth";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 interface User {
     name: string;
@@ -12,108 +12,92 @@ interface User {
 interface AuthContextType {
     csrfToken: string | null;
     user: User | null;
-    login: (user: User) => void;
     logout: () => void;
-    signIn: (username: string, password: string) => void;
-    signUp: (username: string, password: string) => void;
+    signIn: (username: string, password: string) => Promise<number>;
+    signUp: (username: string, password: string) => Promise<number>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 
 function AuthProvider() {
     const [user, setUser] = React.useState<User | null>(null);
     const [csrfToken, setCsrfToken] = React.useState<string | null>(null);
 
     React.useEffect(() => {
-        getCsrfToken()
-    }, [])
+        getCsrfToken();
+    }, []);
 
     function getCsrfToken() {
-        axios.get("http://localhost:8000/csrf/", {withCredentials: true})
-        .then(result => {
-            const token = result.headers["x-csrftoken"]
-            setCsrfToken(token)
-            axios.defaults.headers.post["X-CSRFToken"] = token
-        })
-        .catch(error => {
-            alert(error)
-        })
+        axios.get("http://localhost:8000/csrf/", { withCredentials: true })
+            .then(result => {
+                const token = result.headers["x-csrftoken"];
+                setCsrfToken(token);
+                axios.defaults.headers.post["X-CSRFToken"] = token;
+            })
+            .catch(error => {
+                alert(error);
+            });
     }
 
     React.useEffect(() => {
-        const userName = localStorage.getItem('user.name')
-        const userToken = localStorage.getItem('user.token')
+        const userName = localStorage.getItem('user.name');
+        const userToken = localStorage.getItem('user.token');
         if (userToken && userName) {
-            setUser({name: userName, token: userToken})
+            setUser({ name: userName, token: userToken });
         }
-    }, [])
+    }, []);
 
-    function signIn(username: string, password: string) {
-        axios.post(
+    async function signIn(username: string, password: string): Promise<number> {
+        let status = 0;
+        try {
+            const result = await axios.post(
                 "http://localhost:8000/accounts/signin/",
-                {"username": username, "password": password},
-                {withCredentials: true}
-                )
-        .then(result => {
-            if (result.data["isOk"] == "true") {
-                alert("Вы успешно вошли!")
+                { "username": username, "password": password },
+                { withCredentials: true }
+            );
+            status = Number(result.data["status"]);
+            if (status == 0) {
+                localStorage.setItem('user.name', username);
+                localStorage.setItem('user.token', result.data["status"]["token"]);
+                setUser({ name: username, token: result.data["status"]["token"] });
             }
-            else {
-                alert(result.data["message"])
-            }
-        })
-        .catch(error => {
-            alert(error)
-        })
+
+        } catch (error) {
+            status = 5;
+        }
+    
+        return status;
     }
 
-    function signUp(username: string, password: string) {
-        axios.post(
+    async function signUp(username: string, password: string): Promise<number> {
+        let status = 0;
+        try {
+            const result = await axios.post(
                 "http://localhost:8000/accounts/signup/",
-                {"username": username, "password": password},
-                {withCredentials: true}
-                )
-        .then(result => {
-            if (result.data["isOk"] == "true") {
-                alert("Вы успешно зарегистрированы!")
-            }
-            else {
-                alert(result.data["message"])
-            }
-        })
-        .catch(error => {
-            alert(error)
-        })
-    }
-
-    function login(user: User) {
-        axios.post("http://localhost:8000/post/", {}, {withCredentials: true})
-        .then(result => {
-            alert(result)
-        })
-        .catch(error => {
-            alert(error)
-        })
-
-        localStorage.setItem('user.name', user.name);
-        localStorage.setItem('user.token', user.token);
-        setUser(user)
+                { "username": username, "password": password },
+                { withCredentials: true }
+            );
+    
+            status = Number(result.data["status"]);
+        } catch (error) {
+            status = 5;
+        }
+    
+        return status;
     }
 
     function logout() {
         localStorage.removeItem('user.name');
         localStorage.removeItem('user.token');
-        setUser(null)
+        setUser(null);
     }
 
-    const content = user ? <Workspace></Workspace> : <Auth/>
-
     return (
-        <AuthContext.Provider value={{csrfToken, user, login, logout, signIn, signUp}}>
-            {content}
+        <AuthContext.Provider value={{ csrfToken, user, logout, signIn, signUp }}>
+            {user ? <Workspace /> : <Auth />}
         </AuthContext.Provider>
-    )
+    );
 }
+
 
 export default AuthProvider;
