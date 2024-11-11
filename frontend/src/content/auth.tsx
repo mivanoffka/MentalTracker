@@ -45,8 +45,12 @@ function Auth() {
                 if (status !== undefined && status != 0) {
                     setMessage(messages[status])
                 }
+                
+                
             }
-            setMessage("Пароли не совпадают")
+            else {
+                setMessage("Пароли не совпадают")
+            }
         }
     };
 

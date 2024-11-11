@@ -1,6 +1,8 @@
 from typing import Dict, Optional
 from django.http import JsonResponse
 
+from typing import Sequence
+
 
 def response(status: int, content: Optional[Dict] = None):
     content = content if content else {}
@@ -20,3 +22,6 @@ def incorrect_username_response():
 
 def incorrect_password_response():
     return response(4)
+
+def foreign_record_response():
+    return response(6)

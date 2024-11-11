@@ -2,13 +2,15 @@ import json
 from datetime import datetime as Datetime
 from typing import List
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from .models import Record
+from accounts.models import Account, Token
+from responses import ok_response, unknow_error_response
 
 
 def add(request, uid, value, datetime, model):
-    try:
+    try:        
         record = Record.objects.create(uid=uid, value=int(value),
                                        datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M"), model_id=model)
         record.save()
@@ -26,7 +28,7 @@ def delete(request, uid, id, model):
 
         return _send_records(uid, model)
     except Exception as e:
-        return HttpResponse(str(e))
+        return unknow_error_response(e)
 
 
 def update(request, uid, id, value, datetime, model):
@@ -40,33 +42,34 @@ def update(request, uid, id, value, datetime, model):
 
         return _send_records(uid, model)
     except Exception as e:
-        return HttpResponse(str(e))
+        return unknow_error_response(e)
 
 def truncate(request, uid, model):
     try:
         Record.objects.all().delete()
         return _send_records(uid, model)
     except Exception as e:
-        return HttpResponse(str(e))
+        return unknow_error_response(e)
 
 
 def fetch(request, uid, model):
-    return _send_records(uid, model)
-
+    try:
+        return _send_records(uid, model)
+    except Exception as e:
+        return unknow_error_response(e)
 
 def _send_records(uid, model):
-    return HttpResponse(
-            json.dumps(
-                _jsonify_list(
-                    _get_all_records(int(uid), int(model))
-                )
-            ), content_type="application/json"
+    return JsonResponse(
+        {"status": "0",
+        "content" : _jsonify_list(
+            _get_all_records(int(uid), int(model))
         )
-
+        },
+        safe=False
+    )
 
 def _jsonify_list(records: List[Record]):
     return [record.as_json() for record in records]
-
 
 def _get_all_records(uid, model) -> List[Record]:
     return Record.objects.filter(uid=uid, model_id=model).order_by("datetime")

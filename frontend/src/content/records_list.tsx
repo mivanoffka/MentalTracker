@@ -6,7 +6,7 @@ import RecordsListItem from "./records_list_item.tsx";
 import Model from "./model.tsx";
 import Editor from "./editor.tsx";
 import dayjs from "dayjs";
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 import { AuthContext } from "./authcontext.tsx";
 
 interface RecordsListProps {
@@ -34,16 +34,28 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
         fetchRecords()
     }, [user, model])
 
+    function fillList(response: AxiosResponse<any, any>) {
+        const status = Number(response.data["status"])
+        const content = response.data["content"]
+
+        if (status == 0) {
+            let records: Record[] = []
+            for (let key in content) {
+                let record = content[key]
+                records.push(new Record(record["value"], dayjs(record["datetime"], "DD-MM-YYYY-HH:mm"), record["key"]))
+            }
+            setRecords(records)
+        }
+        else {
+            alert(content["message"])
+        } 
+    }
+
     function fetchRecords() {
         axios.get('http://localhost:8000/records/fetch/uid=' + user.name + "&model=" + model.index)
         .then(
             response  => {
-                let records: Record[] = []
-                for (let key in response.data) {
-                    let record = response.data[key]
-                    records.push(new Record(record["value"], dayjs(record["datetime"], "DD-MM-YYYY-HH:mm"), record["key"]))
-                }
-                setRecords(records)
+                fillList(response)
             })
         .catch(
             error => {
@@ -66,12 +78,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
         axios.get(query)
         .then(
             response  => {
-                let records: Record[] = []
-                for (let key in response.data) {
-                    let record = response.data[key]
-                    records.push(new Record(record["value"], dayjs(record["datetime"], "DD-MM-YYYY-HH:mm"), record["key"]))
-                }
-                setRecords(records)
+                fillList(response)
             })
         .catch(
             error => {
@@ -85,12 +92,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
         axios.get(query)
         .then(
             response  => {
-                let records: Record[] = []
-                for (let key in response.data) {
-                    let record = response.data[key]
-                    records.push(new Record(record["value"], dayjs(record["datetime"], "DD-MM-YYYY-HH:mm"), record["key"]))
-                }
-                setRecords(records)
+                fillList(response)
             })
         .catch(
             error => {
@@ -104,12 +106,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
             axios.get(query)
             .then(
                 response  => {
-                    let records: Record[] = []
-                    for (let key in response.data) {
-                        let record = response.data[key]
-                        records.push(new Record(record["value"], dayjs(record["datetime"], "DD-MM-YYYY-HH:mm"), record["key"]))
-                    }
-                    setRecords(records)
+                    fillList(response)
                 })
             .catch(
                 error => {
