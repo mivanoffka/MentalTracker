@@ -12,7 +12,7 @@ def ok_response(content: Optional[Dict] = None):
     return response(0, content)
 
 def unknow_error_response(exception: Exception):
-    return JsonResponse(1, {"message": str(exception)})
+    return response(1, {"message": str(exception)})
 
 def user_already_exists_response():
     return response(2)

@@ -2,6 +2,7 @@ from typing import Dict
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import json
+import hashlib
 
 from .forms import SignInForm
 from .models import Account, Token
@@ -17,7 +18,8 @@ def sign_in(request):
         existing_accounts = Account.objects.filter(username=username).all()
         if existing_accounts:
             account = existing_accounts[0]
-            if account.password_hash == password:
+            password_hash = hashlib.sha256(password.encode()).hexdigest()
+            if account.password_hash == password_hash:
                 token = Token(account=account)
                 token.save()
                 return ok_response({"token": token.value})
@@ -33,12 +35,12 @@ def sign_up(request):
         data = json.loads(request.body)
         username = data.get("username")
         password = data.get("password")
-
         existing_accounts = Account.objects.filter(username=username).all()
         if existing_accounts:
             return user_already_exists_response()
 
-        new_account = Account(username=username, password_hash=password)
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+        new_account = Account(username=username, password_hash=password_hash)
         new_account.save()
 
         return ok_response()

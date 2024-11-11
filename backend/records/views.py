@@ -9,52 +9,69 @@ from accounts.models import Account, Token
 from responses import ok_response, unknow_error_response
 
 
-def add(request, uid, value, datetime, model):
-    try:        
-        record = Record.objects.create(uid=uid, value=int(value),
+def add(request, token, value, datetime, model):
+    try:       
+        token = Token.objects.filter(value=token).first()
+        if token:
+            if token.is_relevant:
+                uid = token.account.id
+                record = Record.objects.create(uid=uid, value=int(value),
                                        datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M"), model_id=model)
-        record.save()
-        return _send_records(uid, model)
+                record.save()
+                return _send_records(uid, model)
+
     except Exception as e:
         return HttpResponse(str(e))
 
 
-def delete(request, uid, id, model):
+def delete(request, token, id, model):
     try:
-        record: Record = Record.objects.filter(id=id).first()
-        if record.uid != int(uid):
-            raise Exception("Attempted to delete a record that belongs to another user.")
-        record.delete()
+        token = Token.objects.filter(value=token).first()
+        if token:
+            if token.is_relevant:
+                uid = token.account.id
+                record: Record = Record.objects.filter(id=id).first()
+                if record.uid != int(uid):
+                    raise Exception("Attempted to delete a record that belongs to another user.")
+                record.delete()
 
-        return _send_records(uid, model)
+                return _send_records(uid, model)
     except Exception as e:
         return unknow_error_response(e)
 
 
-def update(request, uid, id, value, datetime, model):
+def update(request, token, id, value, datetime, model):
     try:
-        record = Record.objects.filter(id=id).first()
-        if record.uid != int(uid):
-            raise Exception("Attempted to delete a record that belongs to another user.")
-        record.value = int(value)
-        record.datetime = Datetime.strptime(datetime, "%d-%m-%Y-%H:%M")
-        record.save()
+        token = Token.objects.filter(value=token).first()
+        if token:
+            if token.is_relevant:
+                uid = token.account.id
 
-        return _send_records(uid, model)
+                record = Record.objects.filter(id=id).first()
+                if record.uid != int(uid):
+                    raise Exception("Attempted to delete a record that belongs to another user.")
+                record.value = int(value)
+                record.datetime = Datetime.strptime(datetime, "%d-%m-%Y-%H:%M")
+                record.save()
+
+                return _send_records(uid, model)
     except Exception as e:
         return unknow_error_response(e)
 
-def truncate(request, uid, model):
+def truncate(token, model):
     try:
         Record.objects.all().delete()
-        return _send_records(uid, model)
     except Exception as e:
         return unknow_error_response(e)
 
-
-def fetch(request, uid, model):
+def fetch(request, token, model):
     try:
-        return _send_records(uid, model)
+        print(token)
+        token = Token.objects.filter(value=token).first()
+        if token:
+            if token.is_relevant:
+                uid = token.account.id
+                return _send_records(uid, model)
     except Exception as e:
         return unknow_error_response(e)
 

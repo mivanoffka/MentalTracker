@@ -30,11 +30,11 @@ def get_csrf(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('records/add/uid=<str:uid>&value=<str:value>&datetime=<str:datetime>&model=<str:model>', records_views.add),
-    path('records/fetch/uid=<str:uid>&model=<str:model>', records_views.fetch),
-    path('records/truncate/uid=<str:uid>&model=<str:model>', records_views.truncate),
-    path('records/delete/uid=<str:uid>&id=<str:id>&model=<str:model>', records_views.delete),
-    path('records/update/uid=<str:uid>&id=<str:id>&value=<str:value>&datetime=<str:datetime>&model=<str:model>', records_views.update),
+    path('records/add/token=<str:token>&value=<str:value>&datetime=<str:datetime>&model=<str:model>', records_views.add),
+    path('records/fetch/token=<str:token>&model=<str:model>', records_views.fetch),
+    path('records/truncate/token=<str:token>&model=<str:model>', records_views.truncate),
+    path('records/delete/token=<str:token>&id=<str:id>&model=<str:model>', records_views.delete),
+    path('records/update/token=<str:token>&id=<str:id>&value=<str:value>&datetime=<str:datetime>&model=<str:model>', records_views.update),
     path('csrf/', get_csrf),
     path('accounts/', include('accounts.urls'))
 ]

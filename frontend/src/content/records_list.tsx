@@ -52,7 +52,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     }
 
     function fetchRecords() {
-        axios.get('http://localhost:8000/records/fetch/uid=' + user.name + "&model=" + model.index)
+        axios.get('http://localhost:8000/records/fetch/token=' + user.token + "&model=" + model.index)
         .then(
             response  => {
                 fillList(response)
@@ -74,7 +74,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     }
 
     function addRecord(record: Record) {
-        let query = 'http://localhost:8000/records/add/uid=' + user.name + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
+        let query = 'http://localhost:8000/records/add/token=' + user.token + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
         axios.get(query)
         .then(
             response  => {
@@ -88,7 +88,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     }
 
     function updateRecord(record: Record) {
-        let query = 'http://localhost:8000/records/update/uid=' + user.name + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
+        let query = 'http://localhost:8000/records/update/token=' + user.token + '&id=' + record.id + '&value=' + record.value + "&datetime=" + record.datetime.format("DD-MM-YYYY-HH:mm")  + "&model=" + model.index
         axios.get(query)
         .then(
             response  => {
@@ -102,7 +102,7 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
     }
 
     function deleteRecord(record: Record) {
-        let query = 'http://localhost:8000/records/delete/uid=' + user.name + '&id=' + record.id + "&model=" + model.index
+        let query = 'http://localhost:8000/records/delete/token=' + user.token + '&id=' + record.id + "&model=" + model.index
             axios.get(query)
             .then(
                 response  => {

@@ -58,8 +58,8 @@ function AuthProvider() {
             status = Number(result.data["status"]);
             if (status == 0) {
                 localStorage.setItem('user.name', username);
-                localStorage.setItem('user.token', result.data["status"]["token"]);
-                setUser({ name: username, token: result.data["status"]["token"] });
+                localStorage.setItem('user.token', result.data["content"]["token"]);
+                setUser({ name: username, token: result.data["content"]["token"] });
             }
 
         } catch (error) {
