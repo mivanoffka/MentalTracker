@@ -50,7 +50,7 @@ const Workspace: React.FC = ()=> {
                         </Space.Compact>
                         <Flex align="center" justify="center" gap="small">
                             {user.name}
-                            <Button onClick={logOut}>
+                            <Button style={{borderWidth: "0"}} type="link" onClick={logOut}>
                                 Выход
                             </Button>
                         </Flex>
