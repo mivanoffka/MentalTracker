@@ -21,6 +21,7 @@
     "pylint.cwd": "${workspaceFolder}/backend",
     "pylint.interpreter": [
       "/Users/mivanoffka/Documents/Разработка/Web/MentalTracker/backend/.venv/bin/python3"
-    ]
+    ],
+    "black-formatter.cwd": "${workspaceFolder}/backend"
   }
   

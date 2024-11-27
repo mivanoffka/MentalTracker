@@ -117,9 +117,9 @@ const RecordsList: React.FC<RecordsListProps> = ({records, setRecords, model}: R
 
     return (
         <>
-                <Flex vertical gap="middle" align="center" justify="center" style={fullWidthStyle}>
+                <Flex vertical gap="middle" align="center" justify="center" style={fullFillStyle}>
                         <List
-                            style={{width: '100%', height: "500px", overflow: "auto"}}
+                            style={{width: '100%', height: "100%", overflow: "auto"}}
                             bordered
                             dataSource={records.slice().reverse()}
                             renderItem={(record) => 

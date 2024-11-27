@@ -1,6 +1,7 @@
 import Model from "./model";
 
-const blue: string = "#1677ff";
+// const blue: string = "#1677ff";
+const blue: string = "#2e8fff"
 const red: string = "#f5222d";
 const green: string = "#52c41a"
 

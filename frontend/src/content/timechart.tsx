@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import Model from './model.tsx';
-import { theme } from 'antd';
+import { theme, Flex } from 'antd';
+import { fullFillStyle } from './styles.tsx';
 
 interface DateTimeChartProps {
     model: Model;
@@ -86,9 +87,11 @@ function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<Date
     }
 
     return (
-        <>
-            <ReactApexChart height="100%" options={options().options} series={options().series} type="area" />
-        </>
+        <ReactApexChart style={fullFillStyle} height="100%" width="100%" options={options().options} series={options().series} type="area" />
+
+        // <Flex style={fullFillStyle} justify="center" align="center">
+        //     <ReactApexChart height="100%" width="100%" options={options().options} series={options().series} type="area" />
+        // </Flex>
     );
 }
 
