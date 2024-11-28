@@ -1,4 +1,4 @@
-import Model from "./model";
+import Model from "../types/model";
 
 const blue: string = "#1677ff";
 const red: string = "#f5222d";

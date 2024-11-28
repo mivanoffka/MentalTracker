@@ -1,9 +1,9 @@
-import {messages} from "./messages"
+import {messages} from "../collections/messages"
 import { Input, Flex, Button, Form } from "antd"
 import type {FormProps} from "antd"
 import React from "react"
-import { fullFillStyle, fullWidthStyle } from "./styles"
-import { Context } from "./authcontext"
+import { fullFillStyle, fullWidthStyle } from "../utility/styles"
+import { Context } from "../context"
 
 type SignUpFormType = {
     username?: string,

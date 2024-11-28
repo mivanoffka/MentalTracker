@@ -1,13 +1,13 @@
 import { Flex, Card, ConfigProvider, Button, Space, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
-import { fullFillStyle } from "./styles.tsx";
-import Record from "./record.tsx";
-import RecordsList from "./records_list.tsx";
-import PlotCard from "./plot_card.tsx";
-import Model from "./model.tsx";
-import models from "./models.tsx";
-import { Context } from "./authcontext.tsx";
-import TopBar from "./topbar.tsx";
+import { fullFillStyle } from "../utility/styles.tsx";
+import Record from "../types/record.tsx";
+import RecordsList from "./recordsList.tsx";
+import PlotCard from "./plotCard.tsx";
+import Model from "../types/model.tsx";
+import models from "../collections/models.tsx";
+import { Context } from "../context.tsx";
+import TopBar from "./topBar.tsx";
 
 const Workspace: React.FC = () => {
     const context = React.useContext(Context);

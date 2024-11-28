@@ -1,10 +1,10 @@
 import { Button, Card, Flex, List, Input } from "antd";
 import React, { ChangeEventHandler, useEffect, useState } from "react";
-import { fullFillStyle, fullWidthStyle } from "./styles.tsx";
-import Record from "./record.tsx";
-import RecordsListItem from "./records_list_item.tsx";
+import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
+import Record from "../types/record.tsx";
+import RecordsListItem from "./recordsListItem.tsx";
 import Editor from "./editor.tsx";
-import { Context } from "./authcontext.tsx";
+import { Context } from "../context.tsx";
 
 const RecordsList: React.FC = () => {
     const [editorOpened, setEditorOpened] = useState<boolean>(false);

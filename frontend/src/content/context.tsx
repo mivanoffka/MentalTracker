@@ -1,10 +1,10 @@
 import React, { createContext } from "react";
-import Workspace from "./workspace";
-import Auth from "./auth";
+import Workspace from "./workspace/workspace";
+import Auth from "./auth/auth";
 import axios, { AxiosResponse } from "axios";
-import Model from "./model";
-import Record from "./record";
-import models from "./models";
+import Model from "./types/model";
+import Record from "./types/record";
+import models from "./collections/models";
 import dayjs from "dayjs";
 
 interface User {

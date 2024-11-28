@@ -1,11 +1,11 @@
 import React from "react";
-import { Context } from "./authcontext";
+import { Context } from "../context";
 import { Flex, Button } from "antd";
-import { fullWidthStyle } from "./styles";
+import { fullWidthStyle } from "../utility/styles";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
-import Model from "./model";
-import Confirmator from "./confirmator";
-import Article, { ArticleProps } from "./article";
+import Model from "../types/model";
+import Confirmator from "../utility/confirmator";
+import Article, { ArticleProps } from "../utility/article";
 
 function TopBar() {
     const context = React.useContext(Context);

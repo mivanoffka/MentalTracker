@@ -1,12 +1,12 @@
 import { Button, Card, Flex, List, Space } from "antd";
 import React from "react";
-import { fullFillStyle, fullWidthStyle } from "./styles.tsx";
-import Record from "./record.tsx";
+import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
+import Record from "../types/record.tsx";
 import duration from "dayjs/plugin/duration";
-import ApexChart from "./timechart.tsx";
-import Model from "./model.tsx";
+import ApexChart from "./dateTimeChart.tsx";
+import Model from "../types/model.tsx";
 import dayjs from "dayjs";
-import { Context } from "./authcontext.tsx";
+import { Context } from "../context.tsx";
 
 
 class Point {
