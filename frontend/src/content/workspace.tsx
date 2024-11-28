@@ -6,37 +6,17 @@ import RecordsList from "./records_list.tsx";
 import PlotCard from "./plot_card.tsx";
 import Model from "./model.tsx";
 import models from "./models.tsx";
-import { AuthContext } from "./authcontext.tsx";
+import { Context } from "./authcontext.tsx";
 import TopBar from "./topbar.tsx";
 
 const Workspace: React.FC = () => {
-    const [records, setRecords] = useState<Record[]>([]);
-    const [modelIndex, setModelIndex] = useState<number>(0);
-    const [model, setModel] = useState<Model>(models[modelIndex]);
-    const { user, login, logout } = React.useContext(AuthContext);
-
-    function setMoodModel() {
-        setModelIndex(0);
-    }
-
-    function setAnxietyModel() {
-        setModelIndex(1);
-    }
-
-    useEffect(() => {
-        setRecords([]);
-        setModel(models[modelIndex]);
-    }, [modelIndex]);
-
-    function logOut() {
-        logout();
-    }
+    const context = React.useContext(Context);
 
     return (
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: model.primaryColor, // Ваш основной цвет
+                    colorPrimary: context?.model?.primaryColor, // Ваш основной цвет
                     colorText: "#333333", // Цвет текста
                 },
             }}
@@ -58,7 +38,7 @@ const Workspace: React.FC = () => {
                     align="center"
                     justify="center"
                 >
-                    <TopBar model={model}></TopBar>
+                    <TopBar></TopBar>
                 </Flex>
                 <Flex
                     style={{ width: "100%", height: "100%"}}
@@ -82,16 +62,16 @@ const Workspace: React.FC = () => {
                             <Flex style={fullFillStyle} gap="middle">
                                 <div style={{ width: "30%" }}>
                                     <RecordsList
-                                        records={records}
-                                        setRecords={setRecords}
-                                        model={model}
+                                        records={context?.records ?? []}
+                                        setRecords={context?.setRecords}
+                                        model={context?.model ?? models[0]}
                                     />
                                 </div>
                                 <div style={{ width: "70%" }}>
                                     <PlotCard
-                                        model={model}
-                                        setModelIndex={setModelIndex}
-                                        records={records}
+                                        model={context?.model ?? models[0]}
+                                        setModelIndex={context?.setModelIndex}
+                                        records={context?.records ?? []}
                                     ></PlotCard>
                                 </div>
                             </Flex>

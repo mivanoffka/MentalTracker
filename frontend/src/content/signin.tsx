@@ -3,7 +3,7 @@ import { Input, Flex, Button, Form } from "antd"
 import type {FormProps} from "antd"
 import React from "react"
 import { fullFillStyle, fullWidthStyle } from "./styles"
-import { AuthContext } from "./authcontext"
+import { Context } from "./authcontext"
 
 type SignInFormType = {
     username?: string,
@@ -19,7 +19,7 @@ interface SignInProps {
 }
 
 export default function SignIn({message, setMessage, resetMessage, mode: boolean, toggleMode}: SignInProps) {
-    const auth = React.useContext(AuthContext);
+    const auth = React.useContext(Context);
 
     const signIn: FormProps<SignInFormType>['onFinish'] = async (form) => {
         setMessage("")

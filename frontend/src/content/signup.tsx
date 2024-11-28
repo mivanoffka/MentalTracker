@@ -3,7 +3,7 @@ import { Input, Flex, Button, Form } from "antd"
 import type {FormProps} from "antd"
 import React from "react"
 import { fullFillStyle, fullWidthStyle } from "./styles"
-import { AuthContext } from "./authcontext"
+import { Context } from "./authcontext"
 
 type SignUpFormType = {
     username?: string,
@@ -20,7 +20,7 @@ interface SignUpProps {
 }
 
 export default function SignUp({message, setMessage, resetMessage, mode, toggleMode}: SignUpProps) {
-    const auth = React.useContext(AuthContext);
+    const auth = React.useContext(Context);
     const [finished, setFinished] = React.useState<boolean>(false)
 
     React.useEffect(() => {

@@ -7,25 +7,17 @@ import Model from "./model.tsx";
 import Editor from "./editor.tsx";
 import dayjs from "dayjs";
 import axios, { AxiosResponse } from "axios";
-import { AuthContext } from "./authcontext.tsx";
+import { Context } from "./authcontext.tsx";
 
-interface RecordsListProps {
-    records: Record[];
-    setRecords: (records: Record[]) => void;
-    model: Model;
-}
 
-const RecordsList: React.FC<RecordsListProps> = ({
-    records,
-    setRecords,
-    model,
-}: RecordsListProps) => {
+const RecordsList: React.FC = () => {
     const [editorOpened, setEditorOpened] = useState<boolean>(false);
     const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
-    const { user, login, logout } = React.useContext(AuthContext);
+    const context = React.useContext(Context);
 
+    
     const openEditor = () => {
-        setSelectedRecord(model.getDefaultRecord());
+        setSelectedRecord(context?.model?.getDefaultRecord());
         setEditorOpened(true);
     };
 
@@ -36,7 +28,7 @@ const RecordsList: React.FC<RecordsListProps> = ({
 
     useEffect(() => {
         fetchRecords();
-    }, [user, model]);
+    }, [context?.user, context?.model]);
 
     function fillList(response: AxiosResponse<any, any>) {
         const status = Number(response.data["status"]);
@@ -54,7 +46,7 @@ const RecordsList: React.FC<RecordsListProps> = ({
                     )
                 );
             }
-            setRecords(records);
+            context?.setRecords(records);
         } else {
             alert(content["message"]);
         }
@@ -64,9 +56,9 @@ const RecordsList: React.FC<RecordsListProps> = ({
         axios
             .get(
                 "http://localhost:8000/records/fetch/token=" +
-                    user.token +
+                    context?.user?.token +
                     "&model=" +
-                    model.index
+                    context?.model?.index
             )
             .then((response) => {
                 fillList(response);
@@ -87,13 +79,13 @@ const RecordsList: React.FC<RecordsListProps> = ({
     function addRecord(record: Record) {
         let query =
             "http://localhost:8000/records/add/token=" +
-            user.token +
+            context?.user?.token +
             "&value=" +
             record.value +
             "&datetime=" +
             record.datetime.format("DD-MM-YYYY-HH:mm") +
             "&model=" +
-            model.index;
+            context?.model?.index;
         axios
             .get(query)
             .then((response) => {
@@ -107,7 +99,7 @@ const RecordsList: React.FC<RecordsListProps> = ({
     function updateRecord(record: Record) {
         let query =
             "http://localhost:8000/records/update/token=" +
-            user.token +
+            context?.user?.token +
             "&id=" +
             record.id +
             "&value=" +
@@ -115,7 +107,7 @@ const RecordsList: React.FC<RecordsListProps> = ({
             "&datetime=" +
             record.datetime.format("DD-MM-YYYY-HH:mm") +
             "&model=" +
-            model.index;
+            context?.model?.index;
         axios
             .get(query)
             .then((response) => {
@@ -129,11 +121,11 @@ const RecordsList: React.FC<RecordsListProps> = ({
     function deleteRecord(record: Record) {
         let query =
             "http://localhost:8000/records/delete/token=" +
-            user.token +
+            context?.user?.token +
             "&id=" +
             record.id +
             "&model=" +
-            model.index;
+            context?.model?.index;
         axios
             .get(query)
             .then((response) => {
@@ -156,11 +148,10 @@ const RecordsList: React.FC<RecordsListProps> = ({
                 <List
                     style={{ width: "100%", height: "100%", overflow: "auto" }}
                     bordered
-                    dataSource={records.slice().reverse()}
+                    dataSource={context?.records.slice().reverse()}
                     renderItem={(record) => (
                         <RecordsListItem
                             record={record}
-                            model={model}
                             deleteRecord={deleteRecord}
                             openEditor={openEditorForExistingRecord}
                         ></RecordsListItem>
@@ -178,7 +169,6 @@ const RecordsList: React.FC<RecordsListProps> = ({
             </Flex>
 
             <Editor
-                model={model}
                 opened={editorOpened}
                 setOpened={setEditorOpened}
                 selectedRecord={selectedRecord}

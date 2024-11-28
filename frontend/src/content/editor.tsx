@@ -4,21 +4,23 @@ import Record from "./record.tsx";
 import React, {useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Dayjs } from "dayjs";
+import { Context } from "./authcontext.tsx";
 
 interface EditorProps {
-    model: Model;
     opened: boolean;
     setOpened: (value: boolean) => void;
     selectedRecord: Record | null;
     saveRecord: (record: Record) => void;
 }
 
-const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord, saveRecord}: EditorProps) => {
+const Editor: React.FC<EditorProps> = ({opened, setOpened, selectedRecord, saveRecord}: EditorProps) => {
     const [useCurrentDate, setUseCurrentDate] = useState<boolean>(true);
     const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());
 
     const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
     const [sliderValue, setSliderValue] = useState<number>(0);
+
+    const context = React.useContext(Context);
 
     React.useEffect(() => {
         if (opened) {
@@ -78,14 +80,14 @@ const Editor: React.FC<EditorProps> = ({model, opened, setOpened, selectedRecord
                 <Flex gap="middle" vertical align="center" justify="center" style={{height: "100%", width: "100%"}}>
                     <h2>Как самочувствие?</h2>
                     <Flex gap="middle" align="center" justify="center">
-                        <img style={{width: "100px", height: "100px"}} src={model.getImageSource(sliderValue)}/>
-                        <h3 style={{width: "100px"}}>{model.getLabel(sliderValue)}</h3>
+                        <img style={{width: "100px", height: "100px"}} src={context?.model.getImageSource(sliderValue)}/>
+                        <h3 style={{width: "100px"}}>{context?.model.getLabel(sliderValue)}</h3>
                     </Flex>
                     <Slider
                         style={{width: "100%"}}
                         tooltip={{open: false}}
-                        min={model.minValue}
-                        max={model.maxValue}
+                        min={context?.model.minValue}
+                        max={context?.model.maxValue}
                         value={sliderValue}
                         onChange={setSliderValue}
                     />

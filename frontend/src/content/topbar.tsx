@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthContext } from "./authcontext";
+import { Context } from "./authcontext";
 import { Flex, Button } from "antd";
 import { fullWidthStyle } from "./styles";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
@@ -7,12 +7,8 @@ import Model from "./model";
 import Confirmator from "./confirmator";
 import Article, { ArticleProps } from "./article";
 
-interface TopBarProps {
-    model: Model;
-}
-
-function TopBar({ model }: TopBarProps) {
-    const auth = React.useContext(AuthContext);
+function TopBar() {
+    const context = React.useContext(Context);
     const [signOutConfirmatorOpened, setSignOutConfirmatorOpened] =
         React.useState(false);
 
@@ -42,13 +38,13 @@ function TopBar({ model }: TopBarProps) {
             <Flex align="center" justify="center" gap="middle">
                 <Flex>
                     <Flex gap="small">
-                        <h2 style={{ color: model.primaryColor }}>
+                        <h2 style={{ color: context?.model?.primaryColor }}>
                             <HeartFilled />
                         </h2>
                         <h2>Mental</h2>
                     </Flex>
 
-                    <h2 style={{ color: model.primaryColor }}>Tracker</h2>
+                    <h2 style={{ color: context?.model?.primaryColor }}>Tracker</h2>
                 </Flex>
 
                 <Flex align="center" justify="center">
@@ -71,11 +67,11 @@ function TopBar({ model }: TopBarProps) {
             </Flex>
 
             <Flex align="center" justify="center" gap="middle">
-                {auth?.user?.name}
+                {context?.user?.name}
                 <Button
                     style={{
                         borderWidth: "0",
-                        color: model.primaryColor,
+                        color: context?.model?.primaryColor,
                         width: "0px",
                         height: "0px",
                     }}
@@ -90,7 +86,7 @@ function TopBar({ model }: TopBarProps) {
                 prompt="Вы действительно хотите выйти?"
                 opened={signOutConfirmatorOpened}
                 setOpened={setSignOutConfirmatorOpened}
-                onYes={auth?.logout}
+                onYes={context?.logout}
                 onNo={null}
             ></Confirmator>
 

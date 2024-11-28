@@ -3,25 +3,46 @@ import Workspace from "./workspace";
 import { Button } from "antd";
 import Auth from "./auth";
 import axios, { AxiosResponse } from "axios";
+import Model from "./model";
+import Record from "./record";
+import models from "./models";
 
 interface User {
     name: string;
     token: string;
 }
 
-interface AuthContextType {
+interface ContextType {
     csrfToken: string | null;
     user: User | null;
     logout: () => void;
     signIn: (username: string, password: string) => Promise<number>;
     signUp: (username: string, password: string) => Promise<number>;
+
+    records: Record[];
+    setRecords: (records: Record[]) => void;
+
+    modelIndex: number;
+    setModelIndex: (index: number) => void;
+
+    model: Model;
+    setModel: (model: Model) => void;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const Context = createContext<ContextType | undefined>(undefined);
 
-function AuthProvider() {
+function ContextProvider() {
     const [user, setUser] = React.useState<User | null>(null);
     const [csrfToken, setCsrfToken] = React.useState<string | null>(null);
+
+    const [records, setRecords] = React.useState<Record[]>([]);
+    const [modelIndex, setModelIndex] = React.useState<number>(0);
+    const [model, setModel] = React.useState<Model>(models[0]);
+
+    React.useEffect(() => {
+        setRecords([]);
+        setModel(models[modelIndex]);
+    }, [modelIndex]);
 
     React.useEffect(() => {
         getCsrfToken();
@@ -93,11 +114,11 @@ function AuthProvider() {
     }
 
     return (
-        <AuthContext.Provider value={{ csrfToken, user, logout, signIn, signUp }}>
+        <Context.Provider value={{ csrfToken, user, logout, signIn, signUp, model, setModel, records, setRecords, modelIndex, setModelIndex }}>
             {user ? <Workspace /> : <Auth />}
-        </AuthContext.Provider>
+        </Context.Provider>
     );
 }
 
 
-export default AuthProvider;
+export default ContextProvider;

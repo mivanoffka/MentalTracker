@@ -3,14 +3,15 @@ import ReactApexChart from 'react-apexcharts';
 import Model from './model.tsx';
 import { theme, Flex } from 'antd';
 import { fullFillStyle } from './styles.tsx';
+import { Context } from './authcontext.tsx';
 
 interface DateTimeChartProps {
-    model: Model;
     points: (string | number)[][];
 }
 
-function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<DateTimeChartProps> {
+function DateTimeChart({points }: DateTimeChartProps): ReactElement<DateTimeChartProps> {
     const {token} = theme.useToken();
+    const context = React.useContext(Context);
 
     function options() {
         return {
@@ -60,15 +61,15 @@ function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<Date
                 yaxis: {
                     labels: {
                         formatter: function (val: number) {
-                            return model.getLabel(val);
+                            return context?.model.getLabel(val);
                         },
                         style: {
                             fontSize: '13px',
                             width: "50px",
                         }
                     },
-                    min: model.minValue,
-                    max: model.maxValue,
+                    min: context?.model.minValue,
+                    max: context?.model.maxValue,
                     tickAmount: 4
                 },
                 xaxis: {
@@ -78,7 +79,7 @@ function DateTimeChart({ model, points }: DateTimeChartProps): ReactElement<Date
                     shared: false,
                     y: {
                         formatter: function (val: number) {
-                            return model.getLabel(val);
+                            return context?.model.getLabel(val);
                         }
                     }
                 },

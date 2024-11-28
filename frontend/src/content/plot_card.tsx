@@ -6,12 +6,8 @@ import duration from "dayjs/plugin/duration";
 import ApexChart from "./timechart.tsx";
 import Model from "./model.tsx";
 import dayjs from "dayjs";
+import { Context } from "./authcontext.tsx";
 
-interface PlotCardProps {
-    model: Model;
-    setModelIndex: (value: number) => void;
-    records: Record[];
-}
 
 class Point {
     x: number;
@@ -23,31 +19,34 @@ class Point {
     }
 }
 
-const PlotCard: React.FC<PlotCardProps> = ({
-    model,
-    setModelIndex,
-    records,
-}) => {
+const PlotCard: React.FC = () => {
+    const context = React.useContext(Context);
+
     function recordsToPoints() {
-        if (records.length == 0) {
+        if (context?.records?.length == 0) {
             return [];
         }
         let points: (string | number)[][] = [];
 
-        for (let i = 0; i < records.length; i++) {
-            const record = records[i];
-            points.push([record.datetime.toISOString(), record.value]);
+        const length = context?.records?.length;
+        if (length === null || length === undefined)
+            return []
+
+        for (let i = 0; i < length; i++) {
+            const record = context?.records[i];
+            if (record !== null && record !== undefined)
+                points.push([record.datetime.toISOString(), record.value]);
         }
 
         return points;
     }
 
     function setMoodModel() {
-        setModelIndex(0);
+        context?.setModelIndex(0);
     }
 
     function setAnxietyModel() {
-        setModelIndex(1);
+        context?.setModelIndex(1);
     }
 
     return (
@@ -56,14 +55,14 @@ const PlotCard: React.FC<PlotCardProps> = ({
                 <Space.Compact block>
                     <Button
                         onClick={setMoodModel}
-                        type={model.index == 0 ? "primary" : "default"}
+                        type={context?.model?.index == 0 ? "primary" : "default"}
                         style={fullWidthStyle}
                     >
                         Настроение
                     </Button>
                     <Button
                         onClick={setAnxietyModel}
-                        type={model.index == 1 ? "primary" : "default"}
+                        type={context?.model.index == 1 ? "primary" : "default"}
                         style={fullWidthStyle}
                     >
                         Тревожность
@@ -72,7 +71,7 @@ const PlotCard: React.FC<PlotCardProps> = ({
             </Flex>
 
             <Flex style={fullFillStyle} align="center" justify="center">
-                <ApexChart model={model} points={recordsToPoints()}></ApexChart>
+                <ApexChart points={recordsToPoints()}></ApexChart>
             </Flex>
         </Flex>
     );

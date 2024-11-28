@@ -7,15 +7,17 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { editButtonStyle, textButtonStyle} from "./styles.tsx";
 import Confirmator from "./confirmator.tsx";
 import { theme } from 'antd';
+import { Context } from "./authcontext.tsx";
 
 interface RecordsListItemProps {
     record: Record;
-    model: Model;
     deleteRecord: (record: Record) => void;
     openEditor: (record: Record) => void;
 }
 
-const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model, deleteRecord, openEditor}: RecordsListItemProps)=> {
+const RecordsListItem: React.FC<RecordsListItemProps> = ({record, deleteRecord, openEditor}: RecordsListItemProps)=> {
+    const context =  React.useContext(Context);
+
     function date() {
         let datetext = "";
 
@@ -53,9 +55,9 @@ const RecordsListItem: React.FC<RecordsListItemProps> = ({record, model, deleteR
                 key={record.id}
                 style={{alignItems: "center", display: "flex", width: "100%", height: "100%", justifyContent: "space-between"}}>
                 <div style={{alignItems: "center", display: "flex", gap: "10px", width: "100%"}}>
-                    <img height="40" width="40" src={model.getImageSource(record.value)} alt="status" />
+                    <img height="40" width="40" src={context?.model.getImageSource(record.value)} alt="status" />
                     <Flex vertical style={{width: "140px"}} >
-                        <b style={{fontSize: "14px"}}>{model.getLabel(record.value)}</b>
+                        <b style={{fontSize: "14px"}}>{context?.model.getLabel(record.value)}</b>
                         <div style={{fontSize: "10px"}}>{date()}</div>
                     </Flex>
                 </div>
