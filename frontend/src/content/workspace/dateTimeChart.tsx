@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import Model from '../types/model.tsx';
+import Model from '../types/ Model.tsx';
 import { theme, Flex } from 'antd';
 import { fullFillStyle } from '../utility/styles.tsx';
-import { Context } from '../context.tsx';
+import { Context } from '../Context.tsx';
 
 interface DateTimeChartProps {
     points: (string | number)[][];

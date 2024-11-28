@@ -4,7 +4,7 @@ import Record from "../types/record.tsx";
 import React, {useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Dayjs } from "dayjs";
-import { Context } from "../context.tsx";
+import { Context } from "../Context.tsx";
 
 interface EditorProps {
     opened: boolean;

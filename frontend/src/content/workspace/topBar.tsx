@@ -1,9 +1,9 @@
 import React from "react";
-import { Context } from "../context";
+import { Context } from "../Context";
 import { Flex, Button } from "antd";
 import { fullWidthStyle } from "../utility/styles";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
-import Model from "../types/model";
+import Model from "../types/ Model";
 import Confirmator from "../utility/confirmator";
 import Article, { ArticleProps } from "../utility/article";
 

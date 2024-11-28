@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
-import Workspace from "./workspace/workspace";
-import Auth from "./auth/auth";
+import Workspace from "./workspace/Workspace";
+import Auth from "./auth/Auth";
 import axios, { AxiosResponse } from "axios";
-import Model from "./types/model";
+import Model from "./types/ Model";
 import Record from "./types/record";
 import models from "./collections/models";
 import dayjs from "dayjs";

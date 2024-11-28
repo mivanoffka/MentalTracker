@@ -2,8 +2,8 @@ import { Flex, Button } from "antd";
 import React from "react";
 import { fullWidthStyle } from "../utility/styles";
 import axios from "axios";
-import SignIn from "./signIn";
-import SignUp from "./signUp";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 function Auth() {
     const [mode, setMode] = React.useState<boolean>(true);

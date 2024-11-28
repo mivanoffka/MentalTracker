@@ -3,10 +3,10 @@ import React from "react";
 import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
 import Record from "../types/record.tsx";
 import duration from "dayjs/plugin/duration";
-import ApexChart from "./dateTimeChart.tsx";
-import Model from "../types/model.tsx";
+import ApexChart from "./DateTimeChart.tsx";
+import Model from "../types/ Model.tsx";
 import dayjs from "dayjs";
-import { Context } from "../context.tsx";
+import { Context } from "../Context.tsx";
 
 
 class Point {
