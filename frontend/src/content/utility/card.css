@@ -2,22 +2,22 @@
     width: 100%;
     height: 100%;
     padding: 0;
-  }
-  
-  .flex-container {
+}
+
+.flex-container {
     display: flex;
-    flex-direction: row; /* Or column, depending on your needs */
-    justify-content: space-around; /* Or any flex property you want */
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 100%;
-  }
-  
-  .flex-item {
+}
+
+.flex-item {
     padding: 10px;
     background-color: #f0f0f0;
     border: 1px solid #d9d9d9;
-  }
+}
 
 .card {
     background-color: #ffffff;
@@ -25,5 +25,4 @@
     border-color: #000000;
     border-width: 2px;
     padding: 15px;
-
 }

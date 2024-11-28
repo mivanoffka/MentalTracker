@@ -2,8 +2,8 @@ import React, { createContext } from "react";
 import Workspace from "./workspace/Workspace";
 import Auth from "./auth/Auth";
 import axios, { AxiosResponse } from "axios";
-import Model from "./types/ Model";
-import Record from "./types/record";
+import Model from "./types/Model";
+import Record from "./types/Record";
 import models from "./collections/models";
 import dayjs from "dayjs";
 
@@ -45,7 +45,6 @@ function ContextProvider() {
     const [modelIndex, setModelIndex] = React.useState<number>(0);
     const [model, setModel] = React.useState<Model>(models[0]);
 
-
     React.useEffect(() => {
         getCsrfToken();
 
@@ -66,7 +65,6 @@ function ContextProvider() {
             fetchRecords();
         }
     }, [user, model]);
-
 
     function fillList(response: AxiosResponse<any, any>) {
         const status = Number(response.data["status"]);

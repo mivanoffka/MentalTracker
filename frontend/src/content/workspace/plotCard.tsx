@@ -1,25 +1,10 @@
-import { Button, Card, Flex, List, Space } from "antd";
+import { Button, Flex, Space } from "antd";
 import React from "react";
 import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
-import Record from "../types/record.tsx";
-import duration from "dayjs/plugin/duration";
 import ApexChart from "./DateTimeChart.tsx";
-import Model from "../types/ Model.tsx";
-import dayjs from "dayjs";
 import { Context } from "../Context.tsx";
 
-
-class Point {
-    x: number;
-    y: number;
-
-    constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-const PlotCard: React.FC = () => {
+function PlotCard() {
     const context = React.useContext(Context);
 
     function recordsToPoints() {
@@ -29,8 +14,7 @@ const PlotCard: React.FC = () => {
         let points: (string | number)[][] = [];
 
         const length = context?.records?.length;
-        if (length === null || length === undefined)
-            return []
+        if (length === null || length === undefined) return [];
 
         for (let i = 0; i < length; i++) {
             const record = context?.records[i];
@@ -55,7 +39,9 @@ const PlotCard: React.FC = () => {
                 <Space.Compact block>
                     <Button
                         onClick={setMoodModel}
-                        type={context?.model?.index == 0 ? "primary" : "default"}
+                        type={
+                            context?.model?.index == 0 ? "primary" : "default"
+                        }
                         style={fullWidthStyle}
                     >
                         Настроение
@@ -75,6 +61,6 @@ const PlotCard: React.FC = () => {
             </Flex>
         </Flex>
     );
-};
+}
 
 export default PlotCard;

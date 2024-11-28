@@ -1,106 +1,125 @@
-import {messages} from "../collections/messages"
-import { Input, Flex, Button, Form } from "antd"
-import type {FormProps} from "antd"
-import React from "react"
-import { fullFillStyle, fullWidthStyle } from "../utility/styles"
-import { Context } from "../Context"
+import { messages, StatusCode } from "../collections/messages";
+import { Input, Flex, Button, Form } from "antd";
+import type { FormProps } from "antd";
+import React from "react";
+import { fullFillStyle, fullWidthStyle } from "../utility/styles";
+import { Context } from "../Context";
 
 type SignUpFormType = {
-    username?: string,
-    password?: string,
-    confirmation?: string,
-}
+    username?: string;
+    password?: string;
+    confirmation?: string;
+};
 
 interface SignUpProps {
-    message: string,
-    setMessage: (value: string) => void,
-    resetMessage: () => void,
-    mode: boolean,
-    toggleMode: () => void
+    message: string;
+    setMessage: (value: string) => void;
+    resetMessage: () => void;
+    mode: boolean;
+    toggleMode: () => void;
 }
 
-export default function SignUp({message, setMessage, resetMessage, mode, toggleMode}: SignUpProps) {
+export default function SignUp({
+    message,
+    setMessage,
+    resetMessage,
+    mode,
+    toggleMode,
+}: SignUpProps) {
     const auth = React.useContext(Context);
-    const [finished, setFinished] = React.useState<boolean>(false)
+    const [finished, setFinished] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        setFinished(false)
-    }, [mode])
+        setFinished(false);
+    }, [mode]);
 
-    const signUp: FormProps<SignUpFormType>['onFinish'] = async (form) => {
-        setMessage("")
+    const signUp: FormProps<SignUpFormType>["onFinish"] = async (form) => {
+        setMessage("");
 
         if (form.username && form.password && form.confirmation) {
             if (form.password == form.confirmation) {
-                const status = await auth?.signUp(form.username, form.password)
-                if (status !== undefined && status != 0) {
-                    setMessage(messages[status])
+                const status = await auth?.signUp(form.username, form.password);
+                if (status !== undefined && status != StatusCode.Ok) {
+                    setMessage(messages[status as StatusCode]);
                 }
-                
+
                 if (status == 0) {
-                    setFinished(true)
+                    setFinished(true);
                 }
-            }
-            else {
-                setMessage("Пароли не совпадают")
+            } else {
+                setMessage("Пароли не совпадают");
             }
         }
     };
 
-    const signUpWidget =         
-    <Flex style={fullFillStyle} vertical align="center" justify="center" gap="middle">
-    <h2>Регистрация</h2>
-    <Form onFinish={signUp} style={fullWidthStyle}>  
-            Имя пользователя
-            <Form.Item<SignUpFormType>
-            name="username"
-            rules={[{ required: true, message: 'Обязательное поле' }]}
+    const signUpWidget = (
+        <Flex
+            style={fullFillStyle}
+            vertical
+            align="center"
+            justify="center"
+            gap="middle"
+        >
+            <h2>Регистрация</h2>
+            <Form onFinish={signUp} style={fullWidthStyle}>
+                Имя пользователя
+                <Form.Item<SignUpFormType>
+                    name="username"
+                    rules={[{ required: true, message: "Обязательное поле" }]}
+                >
+                    <Input onChange={resetMessage} />
+                </Form.Item>
+                Пароль
+                <Form.Item<SignUpFormType>
+                    name="password"
+                    rules={[{ required: true, message: "Обязательное поле" }]}
+                >
+                    <Input.Password onChange={resetMessage} />
+                </Form.Item>
+                Подтверждение
+                <Form.Item<SignUpFormType>
+                    name="confirmation"
+                    rules={[{ required: true, message: "Обязательное поле" }]}
+                >
+                    <Input.Password onChange={resetMessage} />
+                </Form.Item>
+                <Flex
+                    style={{ color: "red" }}
+                    align="center"
+                    justify="center"
+                    gap="small"
+                >
+                    <p>{message}</p>
+                </Flex>
+                <Form.Item style={fullWidthStyle}>
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={fullWidthStyle}
+                    >
+                        Регистрация
+                    </Button>
+                </Form.Item>
+            </Form>
+            <Button
+                type="link"
+                size="small"
+                style={{ border: "none" }}
+                onClick={toggleMode}
             >
-                <Input  onChange={resetMessage}/>
-            </Form.Item>
+                Уже есть аккаунт?
+            </Button>
+        </Flex>
+    );
 
-            Пароль
-            <Form.Item<SignUpFormType>
-            name="password"
-            rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <Input.Password  onChange={resetMessage}/>
-            </Form.Item>
+    const successWidget = (
+        <Flex vertical>
+            <h1>Регистрация прошла успешно!</h1>
+            <Button type="primary" onClick={toggleMode}>
+                Войти в аккаунт
+            </Button>
+        </Flex>
+    );
 
-            Подтверждение
-            <Form.Item<SignUpFormType>
-            name="confirmation"
-            rules={[{ required: true, message: 'Обязательное поле' }]}
-            >
-                <Input.Password onChange={resetMessage}/>
-            </Form.Item>
-            
-            <Flex style={{color: "red"}} align="center" justify="center" gap="small">
-                <p>{message}</p>
-            </Flex>
-
-            <Form.Item style={fullWidthStyle}>
-                <Button type="primary" htmlType="submit" style={fullWidthStyle}>
-                    Регистрация
-                </Button>
-            </Form.Item>
-
-            
-    </Form>
-    <Button type="link" size="small" style={{border: "none"}} onClick={toggleMode}>
-        Уже есть аккаунт?
-    </Button>
-</Flex>
-
-const successWidget = 
-<Flex vertical>
-    <h1>Регистрация прошла успешно!</h1>
-    <Button type="primary" onClick={toggleMode}>Войти в аккаунт</Button>
-</Flex>
-
-    return (
-        <>
-            {finished ? successWidget : signUpWidget}
-        </>
-    )
+    return <>{finished ? successWidget : signUpWidget}</>;
 }

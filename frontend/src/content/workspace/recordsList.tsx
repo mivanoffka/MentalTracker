@@ -1,18 +1,20 @@
-import { Button, Card, Flex, List, Input } from "antd";
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import { Button, Flex, List } from "antd";
+import React from "react";
 import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
-import Record from "../types/record.tsx";
+import Record from "../types/Record.tsx";
 import RecordsListItem from "./RecordsListItem.tsx";
 import Editor from "./Editor.tsx";
 import { Context } from "../Context.tsx";
 
-const RecordsList: React.FC = () => {
-    const [editorOpened, setEditorOpened] = useState<boolean>(false);
-    const [selectedRecord, setSelectedRecord] = useState<Record | null>(null);
+function RecordsList() {
+    const [editorOpened, setEditorOpened] = React.useState<boolean>(false);
+    const [selectedRecord, setSelectedRecord] = React.useState<Record | null>(
+        null
+    );
     const context = React.useContext(Context);
 
     const openEditor = () => {
-        setSelectedRecord(context?.model?.getDefaultRecord());
+        setSelectedRecord(context?.model?.getDefaultRecord() ?? null);
         setEditorOpened(true);
     };
 
@@ -37,7 +39,6 @@ const RecordsList: React.FC = () => {
                     renderItem={(record) => (
                         <RecordsListItem
                             record={record}
-                            deleteRecord={context?.deleteRecord}
                             openEditor={openEditorForExistingRecord}
                         ></RecordsListItem>
                     )}
@@ -57,10 +58,9 @@ const RecordsList: React.FC = () => {
                 opened={editorOpened}
                 setOpened={setEditorOpened}
                 selectedRecord={selectedRecord}
-                saveRecord={context?.saveRecord}
             ></Editor>
         </>
     );
-};
+}
 
 export default RecordsList;

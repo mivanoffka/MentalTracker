@@ -1,32 +1,26 @@
-import { Flex, Card, ConfigProvider, Button, Space, Tooltip } from "antd";
-import React, { useEffect, useState } from "react";
+import { Flex, ConfigProvider } from "antd";
+import React from "react";
 import { fullFillStyle } from "../utility/styles.tsx";
-import Record from "../types/record.tsx";
 import RecordsList from "./RecordsList.tsx";
 import PlotCard from "./PlotCard.tsx";
-import Model from "../types/ Model.tsx";
-import models from "../collections/models.tsx";
 import { Context } from "../Context.tsx";
 import TopBar from "./TopBar.tsx";
 
-const Workspace: React.FC = () => {
+function Workspace() {
     const context = React.useContext(Context);
 
     return (
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: context?.model?.primaryColor, // Ваш основной цвет
-                    colorText: "#333333", // Цвет текста
+                    colorPrimary: context?.model?.primaryColor,
+                    colorText: "#333333",
                 },
             }}
         >
             <Flex
                 style={{ width: "100%", height: "100%" }}
                 vertical
-                // gap="middle"
-                // align="center"
-                // justify="center"
             >
                 <Flex
                     style={{
@@ -41,13 +35,17 @@ const Workspace: React.FC = () => {
                     <TopBar></TopBar>
                 </Flex>
                 <Flex
-                    style={{ width: "100%", height: "100%"}}
+                    style={{ width: "100%", height: "100%" }}
                     gap="middle"
                     align="center"
                     justify="center"
                 >
                     <Flex
-                        style={{ width: "100%", height: "100%", overflow: "auto" }}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            overflow: "auto",
+                        }}
                         align="center"
                         justify="center"
                         vertical
@@ -61,18 +59,10 @@ const Workspace: React.FC = () => {
                         >
                             <Flex style={fullFillStyle} gap="middle">
                                 <div style={{ width: "30%" }}>
-                                    <RecordsList
-                                        records={context?.records ?? []}
-                                        setRecords={context?.setRecords}
-                                        model={context?.model ?? models[0]}
-                                    />
+                                    <RecordsList />
                                 </div>
                                 <div style={{ width: "70%" }}>
-                                    <PlotCard
-                                        model={context?.model ?? models[0]}
-                                        setModelIndex={context?.setModelIndex}
-                                        records={context?.records ?? []}
-                                    ></PlotCard>
+                                    <PlotCard />
                                 </div>
                             </Flex>
                         </Flex>
@@ -81,6 +71,6 @@ const Workspace: React.FC = () => {
             </Flex>
         </ConfigProvider>
     );
-};
+}
 
 export default Workspace;

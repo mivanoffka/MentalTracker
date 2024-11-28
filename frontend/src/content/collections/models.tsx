@@ -1,42 +1,34 @@
-import Model from "../types/ Model";
+import Model from "../types/Model";
 
 const blue: string = "#1677ff";
 const red: string = "#f5222d";
-const green: string = "#52c41a"
-
+const green: string = "#52c41a";
 
 const moodModel: Model = new Model(
     0,
-    "Настроение", 0, 1000, 500,
-    [
-        "Плохо",
-        "Не очень",
-        "Нейтрально",
-        "Хорошо",
-        "Прекрасно"
-    ],
+    "Настроение",
+    0,
+    1000,
+    500,
+    ["Плохо", "Не очень", "Нейтрально", "Хорошо", "Прекрасно"],
     [
         "src/assets/mood/sad.png",
         "src/assets/mood/upset.png",
         "src/assets/mood/neutral.png",
         "src/assets/mood/ok.png",
-        "src/assets/mood/fine.png"
+        "src/assets/mood/fine.png",
     ],
     blue,
-    '#CCDFFF'
+    "#CCDFFF"
 );
-
 
 const anxietyModel: Model = new Model(
     1,
-    "Тревожность", 0, 1000, 250,
-    [
-        "Безразличие",
-        "Спокойствие",
-        "Беспокойство",
-        "Тревога",
-        "Паника"
-    ],
+    "Тревожность",
+    0,
+    1000,
+    250,
+    ["Безразличие", "Спокойствие", "Беспокойство", "Тревога", "Паника"],
     [
         "src/assets/anxiety/0.png",
         "src/assets/anxiety/1.png",
@@ -45,7 +37,7 @@ const anxietyModel: Model = new Model(
         "src/assets/anxiety/4.png",
     ],
     red,
-    '#CCDFFF'
+    "#CCDFFF"
 );
 
 const models = [moodModel, anxietyModel];

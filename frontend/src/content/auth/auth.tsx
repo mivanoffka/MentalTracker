@@ -1,6 +1,5 @@
-import { Flex, Button } from "antd";
+import { Flex } from "antd";
 import React from "react";
-import { fullWidthStyle } from "../utility/styles";
 import axios from "axios";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -56,7 +55,6 @@ function Auth() {
                             message={message}
                             setMessage={setMessage}
                             resetMessage={resetMessage}
-                            mode={mode}
                             toggleMode={toggleMode}
                         />
                     ) : (

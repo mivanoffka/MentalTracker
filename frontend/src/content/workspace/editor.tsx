@@ -1,7 +1,7 @@
-import {Button, DatePicker, Flex, Modal, Slider, Switch } from "antd"
+import { Button, DatePicker, Flex, Modal, Slider, Switch } from "antd";
 
-import Record from "../types/record.tsx";
-import React, {useEffect, useState } from "react";
+import Record from "../types/Record.tsx";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Dayjs } from "dayjs";
 import { Context } from "../Context.tsx";
@@ -10,10 +10,9 @@ interface EditorProps {
     opened: boolean;
     setOpened: (value: boolean) => void;
     selectedRecord: Record | null;
-    saveRecord: (record: Record) => void;
 }
 
-const Editor: React.FC<EditorProps> = ({opened, setOpened, selectedRecord, saveRecord}: EditorProps) => {
+function Editor({ opened, setOpened, selectedRecord }: EditorProps) {
     const [useCurrentDate, setUseCurrentDate] = useState<boolean>(true);
     const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());
 
@@ -27,29 +26,30 @@ const Editor: React.FC<EditorProps> = ({opened, setOpened, selectedRecord, saveR
             if (selectedRecord !== null) {
                 if (selectedRecord.id != -1) {
                     setUseCurrentDate(false);
-                }
-                else {
+                } else {
                     setUseCurrentDate(true);
                 }
-                setSelectedDate(selectedRecord.datetime)
-                setSliderValue(selectedRecord.value)
+                setSelectedDate(selectedRecord.datetime);
+                setSliderValue(selectedRecord.value);
             }
         }
-    }, [opened])
+    }, [opened]);
 
     const onCancel = () => {
-        setOpened(false)
-    }
+        setOpened(false);
+    };
 
     const onOk = () => {
         if (selectedRecord !== null) {
-            saveRecord(new Record(sliderValue, selectedDate, selectedRecord.id))
-            setOpened(false)
+            context?.saveRecord(
+                new Record(sliderValue, selectedDate, selectedRecord.id)
+            );
+            setOpened(false);
         }
-    }
+    };
 
-    function toggleUseCurrentDate() : void {
-        setUseCurrentDate(!useCurrentDate)
+    function toggleUseCurrentDate(): void {
+        setUseCurrentDate(!useCurrentDate);
     }
 
     useEffect(() => {
@@ -62,58 +62,85 @@ const Editor: React.FC<EditorProps> = ({opened, setOpened, selectedRecord, saveR
 
     useEffect(() => {
         if (useCurrentDate) {
-            setSelectedDate(currentDate)
+            setSelectedDate(currentDate);
         }
-    }, [currentDate, setSelectedDate, useCurrentDate])
-
-    
+    }, [currentDate, setSelectedDate, useCurrentDate]);
 
     return (
-        <Modal width="300px" open={opened} onCancel={onCancel} onOk={onOk}
-               footer={
-                   <Flex style={{width:"100%"}}  align="center" justify="center">
-                       <Button onClick={onOk} style={{width:"100%"}} type="primary">ОК</Button>
-                   </Flex>
-               }
+        <Modal
+            width="300px"
+            open={opened}
+            onCancel={onCancel}
+            onOk={onOk}
+            footer={
+                <Flex style={{ width: "100%" }} align="center" justify="center">
+                    <Button
+                        onClick={onOk}
+                        style={{ width: "100%" }}
+                        type="primary"
+                    >
+                        ОК
+                    </Button>
+                </Flex>
+            }
         >
             <Flex vertical align="center" justify="center">
-                <Flex gap="middle" vertical align="center" justify="center" style={{height: "100%", width: "100%"}}>
+                <Flex
+                    gap="middle"
+                    vertical
+                    align="center"
+                    justify="center"
+                    style={{ height: "100%", width: "100%" }}
+                >
                     <h2>Как самочувствие?</h2>
                     <Flex gap="middle" align="center" justify="center">
-                        <img style={{width: "100px", height: "100px"}} src={context?.model.getImageSource(sliderValue)}/>
-                        <h3 style={{width: "100px"}}>{context?.model.getLabel(sliderValue)}</h3>
+                        <img
+                            style={{ width: "100px", height: "100px" }}
+                            src={context?.model.getImageSource(sliderValue)}
+                        />
+                        <h3 style={{ width: "100px" }}>
+                            {context?.model.getLabel(sliderValue)}
+                        </h3>
                     </Flex>
                     <Slider
-                        style={{width: "100%"}}
-                        tooltip={{open: false}}
+                        style={{ width: "100%" }}
+                        tooltip={{ open: false }}
                         min={context?.model.minValue}
                         max={context?.model.maxValue}
                         value={sliderValue}
                         onChange={setSliderValue}
                     />
-                    <Flex style={{width: "100%", height: "100%"}} align="center" justify="space-between">
+                    <Flex
+                        style={{ width: "100%", height: "100%" }}
+                        align="center"
+                        justify="space-between"
+                    >
                         Текущее время
-                        <Switch value={useCurrentDate} onChange={toggleUseCurrentDate}/>
+                        <Switch
+                            value={useCurrentDate}
+                            onChange={toggleUseCurrentDate}
+                        />
                     </Flex>
-                    <Flex style={{width: "100%", height: "100%"}} align="center" justify="center"
-                          gap="small">
-
-                        <DatePicker style={{width: "100%", height: "100%"}} format="D MMMM YYYY, HH:mm"
-                                    size="small"
-                                    value={selectedDate}
-                                    onChange={setSelectedDate}
-                                    disabled={useCurrentDate}
-                                    showTime
-                                    />
-                        
+                    <Flex
+                        style={{ width: "100%", height: "100%" }}
+                        align="center"
+                        justify="center"
+                        gap="small"
+                    >
+                        <DatePicker
+                            style={{ width: "100%", height: "100%" }}
+                            format="D MMMM YYYY, HH:mm"
+                            size="small"
+                            value={selectedDate}
+                            onChange={setSelectedDate}
+                            disabled={useCurrentDate}
+                            showTime
+                        />
                     </Flex>
                 </Flex>
             </Flex>
         </Modal>
-    )
+    );
 }
 
-export default Editor
-
-
-
+export default Editor;

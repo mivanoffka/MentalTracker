@@ -1,51 +1,66 @@
-import {Button, Flex, Modal} from "antd"
-import React from "react";
+import { Button, Flex, Modal } from "antd";
 
-
-interface Confirmator {
+interface ConfirmatorProps {
     opened: boolean;
     setOpened: (value: boolean) => void;
     prompt: string;
     onYes: (() => any) | null | void;
-    onNo: (() => any) | null| void;
+    onNo: (() => any) | null | void;
 }
 
-const Confirmator: React.FC<Confirmator> = ({opened, setOpened, prompt, onYes=null, onNo=null}) => { 
+function Confirmator({
+    opened,
+    setOpened,
+    prompt,
+    onYes = null,
+    onNo = null,
+}: ConfirmatorProps) {
     function _onYes() {
-        setOpened(false)
+        setOpened(false);
         if (onYes !== null) {
-            onYes()
+            onYes();
         }
     }
 
     function _onNo() {
-        setOpened(false)
+        setOpened(false);
         if (onNo !== null) {
-            onNo()
+            onNo();
         }
     }
 
     function cancel() {
-        setOpened(false)
+        setOpened(false);
     }
 
     return (
-        <Modal 
+        <Modal
             open={opened}
             width="300px"
             onCancel={cancel}
             footer={
-                    <Flex style={{width:"100%"}}  align="center" justify="center" gap="small">
-                        <Button onClick={_onYes} style={{width:"60%"}} type="primary">Да</Button>
-                        <Button onClick={_onNo} style={{width:"40%"}} >Нет</Button>
-                    </Flex>
+                <Flex
+                    style={{ width: "100%" }}
+                    align="center"
+                    justify="center"
+                    gap="small"
+                >
+                    <Button
+                        onClick={_onYes}
+                        style={{ width: "60%" }}
+                        type="primary"
+                    >
+                        Да
+                    </Button>
+                    <Button onClick={_onNo} style={{ width: "40%" }}>
+                        Нет
+                    </Button>
+                </Flex>
             }
         >
-                <h2 style={{textAlign: "center"}}>
-                    {prompt}
-                </h2>
+            <h2 style={{ textAlign: "center" }}>{prompt}</h2>
         </Modal>
-    )
+    );
 }
 
-export default Confirmator
+export default Confirmator;
