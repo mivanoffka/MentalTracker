@@ -1,4 +1,4 @@
-import { Button, Flex, Space } from "antd";
+import { Button, Flex, Skeleton, Space } from "antd";
 import React from "react";
 import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
 import ApexChart from "./DateTimeChart.tsx";
@@ -33,8 +33,24 @@ function PlotCard() {
         context?.setModelIndex(1);
     }
 
+    const plot = (
+        <Flex style={fullFillStyle} align="center" justify="center">
+            <ApexChart points={recordsToPoints()}></ApexChart>
+        </Flex>
+    );
+
+    const skeleton = (
+        <Flex style={{ width: "100%", height: "100%" }}>
+            <Skeleton.Button
+                active
+                block
+                style={{ width: "100%", height: "100%", overflow: "auto" }}
+            ></Skeleton.Button>
+        </Flex>
+    );
+
     return (
-        <Flex style={fullFillStyle} vertical>
+        <Flex style={fullFillStyle} vertical gap="middle">
             <Flex style={fullWidthStyle} align="center" justify="center">
                 <Space.Compact block>
                     <Button
@@ -56,9 +72,7 @@ function PlotCard() {
                 </Space.Compact>
             </Flex>
 
-            <Flex style={fullFillStyle} align="center" justify="center">
-                <ApexChart points={recordsToPoints()}></ApexChart>
-            </Flex>
+            {context?.records !== null ? plot : skeleton}
         </Flex>
     );
 }

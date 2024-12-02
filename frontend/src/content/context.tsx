@@ -56,7 +56,7 @@ function ContextProvider() {
     }, []);
 
     React.useEffect(() => {
-        setRecords([]);
+        setRecords(null);
         setModel(models[modelIndex]);
     }, [modelIndex]);
 
@@ -234,7 +234,7 @@ function ContextProvider() {
         localStorage.removeItem("user.token");
         setUser(null);
 
-        setRecords([]);
+        setRecords(null);
     }
 
     return (
