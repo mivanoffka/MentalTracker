@@ -41,7 +41,7 @@ function ContextProvider() {
     const [user, setUser] = React.useState<User | null>(null);
     const [csrfToken, setCsrfToken] = React.useState<string | null>(null);
 
-    const [records, setRecords] = React.useState<Record[]>([]);
+    const [records, setRecords] = React.useState<Record[] | null>([]);
     const [modelIndex, setModelIndex] = React.useState<number>(0);
     const [model, setModel] = React.useState<Model>(models[0]);
 
