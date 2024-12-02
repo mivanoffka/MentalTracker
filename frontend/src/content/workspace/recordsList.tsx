@@ -5,7 +5,7 @@ import Record from "../types/Record.tsx";
 import RecordsListItem from "./RecordsListItem.tsx";
 import Editor from "./Editor.tsx";
 import { Context } from "../Context.tsx";
-import RecordsListSkeleton from "./RecordsListSkeleton.tsx";
+
 
 function RecordsList() {
     const [editorOpened, setEditorOpened] = React.useState<boolean>(false);

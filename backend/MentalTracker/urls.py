@@ -15,10 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.urls import path, include
 from django.middleware.csrf import get_token
-from records import views as records_views
 
 
 def get_csrf(request):
@@ -29,12 +28,7 @@ def get_csrf(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('records/add/token=<str:token>&value=<str:value>&datetime=<str:datetime>&model=<str:model>', records_views.add),
-    path('records/fetch/token=<str:token>&model=<str:model>', records_views.fetch),
-    path('records/truncate/token=<str:token>&model=<str:model>', records_views.truncate),
-    path('records/delete/token=<str:token>&id=<str:id>&model=<str:model>', records_views.delete),
-    path('records/update/token=<str:token>&id=<str:id>&value=<str:value>&datetime=<str:datetime>&model=<str:model>', records_views.update),
     path('csrf/', get_csrf),
+    path('records/', include('records.urls')),
     path('accounts/', include('accounts.urls'))
 ]

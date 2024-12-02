@@ -22,6 +22,16 @@
     "pylint.interpreter": [
       "/Users/mivanoffka/Documents/Разработка/Web/MentalTracker/backend/.venv/bin/python3"
     ],
-    "black-formatter.cwd": "${workspaceFolder}/backend"
+    "black-formatter.cwd": "${workspaceFolder}/backend",
+    "python.testing.unittestArgs": [
+      "-v",
+      "-s",
+      "./backend",
+      "-p",
+      "*test*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true,
+
   }
   

@@ -19,7 +19,8 @@ def add(request, token, value, datetime, model):
                                        datetime=Datetime.strptime(datetime, "%d-%m-%Y-%H:%M"), model_id=model)
                 record.save()
                 return _send_records(uid, model)
-
+        
+        raise Exception("Authentication token outdated or invalid.")
     except Exception as e:
         return HttpResponse(str(e))
 
@@ -36,6 +37,8 @@ def delete(request, token, id, model):
                 record.delete()
 
                 return _send_records(uid, model)
+        
+        raise Exception("Authentication token outdated or invalid.")
     except Exception as e:
         return unknow_error_response(e)
 
@@ -55,12 +58,15 @@ def update(request, token, id, value, datetime, model):
                 record.save()
 
                 return _send_records(uid, model)
+            
+        raise Exception("Authentication token outdated or invalid.")
     except Exception as e:
         return unknow_error_response(e)
 
 def truncate(token, model):
     try:
         Record.objects.all().delete()
+        return ok_response()
     except Exception as e:
         return unknow_error_response(e)
 
@@ -72,6 +78,8 @@ def fetch(request, token, model):
             if token.is_relevant:
                 uid = token.account.id
                 return _send_records(uid, model)
+            
+        raise Exception("Authentication token outdated or invalid.")
     except Exception as e:
         return unknow_error_response(e)
 

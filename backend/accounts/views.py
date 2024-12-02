@@ -1,6 +1,3 @@
-from typing import Dict
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
 import json
 import hashlib
 
@@ -24,9 +21,12 @@ def sign_in(request):
                 return ok_response({"token": token.value})
             else:
                 return incorrect_password_response()
-
+        
         else:
             return incorrect_username_response()
+        
+    else:
+        return unknow_error_response(Exception("Method not allowed."))
     
 
 def sign_up(request):
@@ -43,6 +43,8 @@ def sign_up(request):
         new_account.save()
 
         return ok_response()
+    else:
+        return unknow_error_response(Exception("Method not allowed."))
 
 def reset(request):
     try:
