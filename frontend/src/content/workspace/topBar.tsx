@@ -15,6 +15,7 @@ function TopBar() {
     const [articleTitle, setArticleTitle] = React.useState("Sample text");
     const [articleContent, setArticleContent] = React.useState("Sample text");
 
+    const guideContent = "Sample text"
     const mentalHealthContent =
         "<p>Ментальное здоровье является важной частью общего здоровья и благополучия человека. Оно включает в себя эмоциональное, психологическое и социальное благополучие. Ментальное здоровье влияет на то, как мы думаем, чувствуем и действуем в повседневной жизни, а также на то, как мы справляемся со стрессом, общаемся с другими и принимаем решения.</p> <h2>Основные ментальные заболевания</h2> <ul> <li><strong>Депрессия:</strong> Это расстройство характеризуется постоянным чувством грусти, утраты интереса к ранее любимым занятиям, а также физическими симптомами, такими как изменения аппетита и сна.</li> <li><strong>Тревожные расстройства:</strong> Это группа расстройств, включающая генерализованное тревожное расстройство, паническое расстройство и социальную фобию. Они характеризуются чрезмерной и постоянной тревогой и страхом.</li> <li><strong>Биполярное расстройство:</strong> Это расстройство характеризуется чередованием периодов депрессии и мании (чрезмерно приподнятого настроения), что существенно влияет на повседневную жизнь человека.</li> <li><strong>Шизофрения:</strong> Это серьезное психическое расстройство, которое влияет на мышление, восприятие, эмоции и поведение. Люди с шизофренией могут испытывать галлюцинации и бред.</li> <li><strong>Расстройства пищевого поведения:</strong> Эти расстройства включают анорексию, булимия и переедание, и характеризуются нездоровым отношением к еде и весу.</li> </ul>";
 
@@ -27,6 +28,12 @@ function TopBar() {
         setArticleContent(mentalHealthContent);
         setArticleOpened(true);
     }
+    
+    function openGuideArticle() {
+        setArticleTitle("Как пользоваться");
+        setArticleContent(guideContent);
+        setArticleOpened(true);
+    }
 
     return (
         <Flex
@@ -35,10 +42,15 @@ function TopBar() {
             align="center"
             justify="space-between"
         >
-            <Flex align="center" justify="center" gap="middle">
-                <Flex>
+            <Flex
+                style={{ overflow: "hidden", width: "80%" }}
+                align="center"
+                justify="left"
+                gap="middle"
+            >
+                <Flex style={{overflow: "hidden", minWidth: "30px"  }} >
                     <Flex gap="small">
-                        <h2 style={{ color: context?.model?.primaryColor }}>
+                        <h2 style={{ color: context?.model?.primaryColor, minWidth: "30px" }}>
                             <HeartFilled />
                         </h2>
                         <h2>Mental</h2>
@@ -48,22 +60,25 @@ function TopBar() {
                         Tracker
                     </h2>
                 </Flex>
-
-                <Flex align="center" justify="center">
+                <Flex
+                    align="center"
+                    justify="center"
+                    gap="small"
+                >
                     <Button
-                        style={{ borderWidth: "0", color: "black" }}
-                        type="link"
-                        // onClick={openConfirmator}
-                    >
-                        Как пользоваться?
-                    </Button>
-
-                    <Button
-                        style={{ borderWidth: "0", color: token.colorPrimary }}
+                        style={{ borderWidth: "0", color: token.colorPrimary, overflow: "hidden" }}
                         type="link"
                         onClick={openHealthArticle}
                     >
                         О ментальном здоровье
+                    </Button>
+
+                    <Button
+                        style={{ borderWidth: "0",  color: token.colorPrimary,  overflow: "hidden"}}
+                        type="link"
+                        onClick={openGuideArticle}
+                    >
+                        Как пользоваться?
                     </Button>
                 </Flex>
             </Flex>

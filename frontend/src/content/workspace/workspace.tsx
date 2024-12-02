@@ -52,7 +52,7 @@ function Workspace() {
                         vertical
                     >
                         <Flex
-                            style={{ width: "1100px", height: "550px" }}
+                            style={{ width: "80%", height: "80%" }}
                             vertical
                             gap="middle"
                             align="center"

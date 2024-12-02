@@ -2,7 +2,7 @@ import { Flex } from "antd";
 import React from "react";
 import axios from "axios";
 import SignIn from "./SignIn";
-import SignUp from "./S";
+import SignUp from "./SignUp";
 
 function Auth() {
     const [mode, setMode] = React.useState<boolean>(true);

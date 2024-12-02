@@ -64,6 +64,7 @@ function RecordsListItem({ record, openEditor }: RecordsListItemProps) {
                     display: "flex",
                     gap: "10px",
                     width: "100%",
+                    overflow: "hidden"
                 }}
             >
                 <img
@@ -72,13 +73,14 @@ function RecordsListItem({ record, openEditor }: RecordsListItemProps) {
                     src={context?.model.getImageSource(record.value)}
                     alt="status"
                 />
-                <Flex vertical style={{ width: "140px" }}>
+                <Flex vertical style={{ maxHeight: "65px"}}>
                     <b style={{ fontSize: "14px" }}>
                         {context?.model.getLabel(record.value)}
                     </b>
                     <div style={{ fontSize: "10px" }}>{date()}</div>
                 </Flex>
             </div>
+
             <Flex>
                 <Button
                     style={{ ...textButtonStyle, color: token.colorPrimary }}

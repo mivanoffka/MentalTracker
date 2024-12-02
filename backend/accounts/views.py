@@ -4,7 +4,6 @@ from django.http import HttpResponse, JsonResponse
 import json
 import hashlib
 
-from .forms import SignInForm
 from .models import Account, Token
 from responses import (ok_response, unknow_error_response, user_already_exists_response,
                         incorrect_username_response, incorrect_password_response)
