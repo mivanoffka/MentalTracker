@@ -113,10 +113,15 @@ export default function SignUp({
     );
 
     const successWidget = (
-        <Flex vertical>
-            <h1>Регистрация прошла успешно!</h1>
-            <Button type="primary" onClick={toggleMode}>
-                Войти в аккаунт
+        <Flex vertical style={{textAlign: "center", width: "200%"}} align="center" justify="center">
+            <h2>Регистрация прошла успешно!</h2>
+            <Button
+                type="link"
+                size="small"
+                style={{ border: "none" }}
+                onClick={toggleMode}
+            >
+              Войти в аккаунт
             </Button>
         </Flex>
     );

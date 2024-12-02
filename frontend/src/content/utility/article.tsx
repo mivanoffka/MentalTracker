@@ -1,4 +1,4 @@
-import { Flex, Modal } from "antd";
+import { Flex, Modal, theme } from "antd";
 
 export interface ArticleProps {
     opened: boolean;
@@ -8,8 +8,26 @@ export interface ArticleProps {
 }
 
 function Article({ opened, setOpened, title, content }: ArticleProps) {
+    const { token } = theme.useToken();
+
     function cancel() {
         setOpened(false);
+    }
+
+    function changeTagColors() {
+        const tags = ["strong", "h1", "h2", "h3", "h4"];
+
+        const tempContainer = document.createElement("div");
+        tempContainer.innerHTML = content;
+
+        tags.forEach((tag) => {
+            const elements = tempContainer.querySelectorAll(tag);
+            elements.forEach((element) => {
+                element.style.color = token.colorPrimary;
+            });
+        });
+
+        return tempContainer.innerHTML;
     }
 
     return (
@@ -17,7 +35,9 @@ function Article({ opened, setOpened, title, content }: ArticleProps) {
             open={opened}
             onCancel={cancel}
             width="700px"
-            title=<b style={{ fontSize: "35px" }}>{title}</b>
+            title=<b style={{ fontSize: "35px", color: token.colorPrimary }}>
+                {title}
+            </b>
             footer={null}
         >
             <Flex
@@ -27,7 +47,9 @@ function Article({ opened, setOpened, title, content }: ArticleProps) {
                 justify="center"
             >
                 <Flex style={{ width: "90%" }}>
-                    <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                    <div
+                        dangerouslySetInnerHTML={{ __html: changeTagColors() }}
+                    ></div>
                 </Flex>
             </Flex>
         </Modal>

@@ -1,11 +1,12 @@
 import React from "react";
 import { Context } from "../Context";
-import { Flex, Button } from "antd";
+import { Flex, Button, theme } from "antd";
 import { HeartFilled } from "@ant-design/icons";
 import Confirmator from "../utility/Confirmator";
 import Article from "../utility/Article";
 
 function TopBar() {
+    const { token } = theme.useToken();
     const context = React.useContext(Context);
     const [signOutConfirmatorOpened, setSignOutConfirmatorOpened] =
         React.useState(false);
@@ -58,7 +59,7 @@ function TopBar() {
                     </Button>
 
                     <Button
-                        style={{ borderWidth: "0", color: "black" }}
+                        style={{ borderWidth: "0", color: token.colorPrimary }}
                         type="link"
                         onClick={openHealthArticle}
                     >

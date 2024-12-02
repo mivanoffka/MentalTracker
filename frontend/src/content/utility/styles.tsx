@@ -32,3 +32,4 @@ export const deleteButtonStyle: CSSProperties = {
     ...textButtonStyle,
     color: "#E14D3E",
 };
+

@@ -46,7 +46,7 @@ function Auth() {
                 align="center"
                 justify="center"
             >
-                <Flex style={{ width: "250px" }} vertical>
+                <Flex style={{ width: "250px" }} vertical align="center" justify="center">
                     {/* <Button onClick={reset} style={fullWidthStyle}>
                 Удалить все аккаунты
             </Button> */}

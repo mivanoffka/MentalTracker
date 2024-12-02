@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Record(models.Model):
     uid = models.IntegerField()
     value = models.IntegerField()

@@ -16,6 +16,7 @@ function Workspace() {
                     colorPrimary: context?.model?.primaryColor,
                     colorText: "#333333",
                 },
+                
             }}
         >
             <Flex
