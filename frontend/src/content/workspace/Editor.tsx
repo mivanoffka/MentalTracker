@@ -72,6 +72,7 @@ function Editor({ opened, setOpened, selectedRecord }: EditorProps) {
             open={opened}
             onCancel={onCancel}
             onOk={onOk}
+            maskClosable={false}
             footer={
                 <Flex style={{ width: "100%" }} align="center" justify="center">
                     <Button
