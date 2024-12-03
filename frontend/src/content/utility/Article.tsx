@@ -1,55 +1,62 @@
 import { Flex, Modal, theme } from "antd";
+import React from "react";
+import { ReactElement, ReactNode } from "react";
 
 export interface ArticleProps {
     opened: boolean;
     setOpened: (value: boolean) => void;
     title: string;
-    content: string;
+    content: ReactElement;
 }
 
 function Article({ opened, setOpened, title, content }: ArticleProps) {
     const { token } = theme.useToken();
+    const tags = ["strong", "h1", "h2", "h3", "h4", "b"];
 
     function cancel() {
         setOpened(false);
     }
 
-    function changeTagColors() {
-        const tags = ["strong", "h1", "h2", "h3", "h4"];
+    // Рекурсивная функция для обработки children
+    function applyStylesToTags(children: ReactNode): ReactNode {
+        return React.Children.map(children, (child) => {
+            if (!React.isValidElement(child)) return child;
 
-        const tempContainer = document.createElement("div");
-        tempContainer.innerHTML = content;
+            const { type, props } = child;
+            if (typeof type === "string" && tags.includes(type)) {
+                const color = token.colorPrimary; // Цвет для стилей
+                const style = { color, ...(props.style || {}) };
 
-        tags.forEach((tag) => {
-            const elements = tempContainer.querySelectorAll(tag);
-            elements.forEach((element) => {
-                element.style.color = token.colorPrimary;
-            });
+                return React.cloneElement(child, { ...props, style }, applyStylesToTags(props.children));
+            }
+
+            // Рекурсивно обрабатываем вложенные элементы
+            return React.cloneElement(child, { ...props }, applyStylesToTags(props.children));
         });
-
-        return tempContainer.innerHTML;
     }
+
+    const styledContent = applyStylesToTags(content);
 
     return (
         <Modal
             open={opened}
             onCancel={cancel}
             width="700px"
-            title=<b style={{ fontSize: "35px", color: token.colorPrimary }}>
-                {title}
-            </b>
+            title={
+                <b style={{ fontSize: "35px", color: token.colorPrimary }}>
+                    {title}
+                </b>
+            }
             footer={null}
         >
             <Flex
                 vertical
                 style={{ height: "450px", overflow: "auto" }}
-                align="lef"
-                justify="center"
+                align="left"
+                justify="top"
             >
-                <Flex style={{ width: "90%" }}>
-                    <div
-                        dangerouslySetInnerHTML={{ __html: changeTagColors() }}
-                    ></div>
+                <Flex style={{ width: "85%" }} align="left" justify="left">
+                    {styledContent}
                 </Flex>
             </Flex>
         </Modal>
