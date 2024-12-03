@@ -1,9 +1,9 @@
 import React from "react";
-import { Context } from "../Context";
+import { Context } from "../C";
 import { Flex, Button, theme } from "antd";
 import { HeartFilled } from "@ant-design/icons";
-import Confirmator from "../utility/Confirmator";
-import Article from "../utility/Article";
+import Confirmator from "../utility/C";
+import Article from "../utility/A";
 
 function TopBar() {
     const { token } = theme.useToken();

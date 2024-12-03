@@ -1,12 +1,12 @@
 import { List, Button, Flex } from "antd";
 import React from "react";
-import Record from "../types/Record.tsx";
+import Record from "../types/R.tsx";
 import dayjs from "dayjs";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { textButtonStyle } from "../utility/styles.tsx";
-import Confirmator from "../utility/Confirmator.tsx";
+import Confirmator from "../utility/C.tsx";
 import { theme } from "antd";
-import { Context } from "../Context.tsx";
+import { Context } from "../C.tsx";
 
 interface RecordsListItemProps {
     record: Record;

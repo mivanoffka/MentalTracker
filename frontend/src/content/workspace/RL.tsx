@@ -1,10 +1,10 @@
 import { Button, Flex, List, Skeleton } from "antd";
 import React from "react";
 import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
-import Record from "../types/Record.tsx";
-import RecordsListItem from "./RecordsListItem.tsx";
-import Editor from "./Editor.tsx";
-import { Context } from "../Context.tsx";
+import Record from "../types/R.tsx";
+import RecordsListItem from "./RI.tsx";
+import Editor from "./E.tsx";
+import { Context } from "../C.tsx";
 
 
 function RecordsList() {

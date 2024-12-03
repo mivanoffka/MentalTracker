@@ -1,10 +1,10 @@
 import { Flex, ConfigProvider } from "antd";
 import React from "react";
 import { fullFillStyle } from "../utility/styles.tsx";
-import RecordsList from "./RecordsList.tsx";
-import PlotCard from "./PlotCard.tsx";
-import { Context } from "../Context.tsx";
-import TopBar from "./TopBar.tsx";
+import RecordsList from "./RL.tsx";
+import PlotCard from "./PC.tsx";
+import { Context } from "../C.tsx";
+import TopBar from "./T.tsx";
 
 function Workspace() {
     const context = React.useContext(Context);
