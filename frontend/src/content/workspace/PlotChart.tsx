@@ -1,8 +1,8 @@
 import { Button, Flex, Skeleton, Space } from "antd";
 import React from "react";
 import { fullFillStyle, fullWidthStyle } from "../utility/styles.tsx";
-import ApexChart from "./DTC.tsx";
-import { Context } from "../C.tsx";
+import ApexChart from "./DateTimeChart.tsx";
+import { Context } from "../Context.tsx";
 
 function PlotCard() {
     const context = React.useContext(Context);

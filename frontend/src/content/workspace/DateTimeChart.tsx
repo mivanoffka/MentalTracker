@@ -2,7 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { theme } from "antd";
 import { fullFillStyle } from "../utility/styles.tsx";
-import { Context } from "../C.tsx";
+import { Context } from "../Context.tsx";
 
 interface DateTimeChartProps {
     points: (string | number)[][];

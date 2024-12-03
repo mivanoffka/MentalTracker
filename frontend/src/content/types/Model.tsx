@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import Record from "./R.tsx";
+import Record from "./Record.tsx";
 
 class Model {
     #index: number;

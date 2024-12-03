@@ -1,10 +1,10 @@
 import { Button, DatePicker, Flex, Modal, Slider, Switch } from "antd";
 
-import Record from "../types/R.tsx";
+import Record from "../types/Record.tsx";
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Dayjs } from "dayjs";
-import { Context } from "../C.tsx";
+import { Context } from "../Context.tsx";
 
 interface EditorProps {
     opened: boolean;

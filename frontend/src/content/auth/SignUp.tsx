@@ -3,7 +3,7 @@ import { Input, Flex, Button, Form } from "antd";
 import type { FormProps } from "antd";
 import React from "react";
 import { fullFillStyle, fullWidthStyle } from "../utility/styles";
-import { Context } from "../C";
+import { Context } from "../Context";
 
 type SignUpFormType = {
     username?: string;
